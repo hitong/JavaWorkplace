@@ -1,0 +1,38 @@
+package client;
+
+import java.util.ArrayList;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import model.User;
+import utils.InversionControl;
+
+public class LoginViewControl implements InversionControl<LaunchClient>{
+	@FXML
+	private TextField id;
+	
+	@FXML
+	private PasswordField psw;
+	
+	public void Login(){
+		User user = new User();
+		user.setId(this.id.getText());
+		user.setPsw(this.psw.getText());
+		ArrayList<User> tmp = main.userService.searchUser(user);
+		if(tmp.size() == 1){
+			main.user = tmp.get(0);
+			main.showChat();
+		}
+	}
+	
+	public void Logon(){
+		main.showLogon();
+	}
+	
+	
+	LaunchClient main;
+	public void setMain(LaunchClient main){
+		this.main = main;
+	}
+}

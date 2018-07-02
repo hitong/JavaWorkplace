@@ -1,0 +1,28 @@
+package 实验四.db;
+
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import 实验四.other.GenneralBaseDao;
+
+public class PersonService {
+   public boolean deletePerson(Person person){
+	   GenneralBaseDao<Person> bd = new GenneralBaseDao<Person>();
+	   return bd.deleteObj(person);
+   }
+   
+   public boolean addPerson(Person person){
+	   //...
+	   return true;
+   }
+   
+   public boolean updatePerson(Person person){
+	   	   return true;
+   }
+   
+   public ArrayList<Person> queryPerson(String sql){
+	   ResultSet rs=null;
+	   Person person=new Person();
+	   return null;
+   }
+}

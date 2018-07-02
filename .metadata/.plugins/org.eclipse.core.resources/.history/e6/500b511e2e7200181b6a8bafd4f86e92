@@ -1,0 +1,58 @@
+package utils;
+
+import java.util.ArrayList;
+
+import client.ChatViewControl;
+import client.ClientHandle;
+import client.ContextControl;
+import javafx.application.Platform;
+import model.Friend;
+import model.Message;
+import model.User;
+
+public class ClientExqute {
+
+	public static String login(Message message, ClientHandle ch) {
+		String[] meg = message.getMeg();
+		if (meg != null) {
+			int size = (meg.length) / 2;
+			ArrayList<Friend> friends = new ArrayList<>(size);
+			for (int i = 1; i < size; i++) {
+				Friend tmpFriend = new Friend(meg[i].substring(1), meg[size + i]);
+				tmpFriend.setHistory(meg[i].charAt(0) == 'Y');
+				friends.add(tmpFriend);
+			}
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					ch.getMain().setUser(new User(meg[0], meg[size], ""));
+					ch.getMain().showChat();
+					ch.getMain().addFriends(friends);
+				}
+			});
+		} else {
+			System.out.println(message.getMessageId() );
+		}
+		return "";
+	}
+
+	public static void recive(Message message, ClientHandle ch) {
+		ChatViewControl chatViewControl = (ChatViewControl) (ch.getMain().viewControl);
+		if (chatViewControl.getChat().containsKey(message.getFrom())) {
+			chatViewControl.addTab(ch.getMain().getFriend(message.getFrom()));
+		} 
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				ContextControl c = chatViewControl.getChat().get(message.getFrom());
+				if(c == null){
+					chatViewControl.addTab(new Friend(message.getFrom(), ""));
+					chatViewControl.getChat().get(message.getFrom()).reciveMessage(message);
+				} else {
+					c.reciveMessage(message);
+				}
+			}
+		});
+	}
+}

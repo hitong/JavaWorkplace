@@ -1,0 +1,40 @@
+package 动态分配;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args){
+		Scanner input = new Scanner(System.in);
+		System.out.println("请输入空间总长度");
+		int allLongth = input.nextInt();
+		ArrayList<Depart> departs = new ArrayList<Depart>();
+		departs.add(new Depart(0,allLongth,0));
+		while(true){
+			System.out.println("��ѡ���ܣ�"
+					+ "1.�����ڴ�"
+					+ "2.�����ڴ�"
+					+ "3.�ػ�");
+			int s = input.nextInt();
+			switch(s){
+			case 1:
+				System.out.println("��������̴�С��");
+				if(Utils.apply(departs, new MyThread(input.nextInt()))){
+					System.out.println("����ɹ�");
+				} else{
+					System.out.println("����ʧ��");
+				}
+				break;
+			case 2:
+				System.out.println("��������̺ţ�");
+				Utils.relise(departs, input.nextInt());
+				break;
+			case 3:
+				System.exit(1);
+			}
+			for(Depart depart:departs){
+				System.out.println(depart);
+			}
+		}
+	}
+}

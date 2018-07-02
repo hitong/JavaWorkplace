@@ -1,0 +1,7 @@
+package 实验四.connection;
+
+public class MyCon {
+	public final static int FREE = 100;
+	public final static int BUSY = 101;
+	
+}

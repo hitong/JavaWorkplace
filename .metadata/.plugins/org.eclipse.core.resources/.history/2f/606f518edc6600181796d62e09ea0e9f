@@ -1,0 +1,84 @@
+package work;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.ArrayList;
+
+import javafx.collections.ObservableList;
+
+public class IORecord {
+	public final static int AllSize = 6;
+
+	@SuppressWarnings("resource")
+	public static ArrayList<Model> readFile() {
+		ArrayList<String> recode = new ArrayList<>();
+		ArrayList<Model> allRecode = new ArrayList<>();
+		BufferedReader reader;
+		try {
+			reader = new BufferedReader(new FileReader(new File("记录.txt")));
+		} catch (FileNotFoundException e1) {
+			return allRecode;
+		}
+
+		try {
+			while (true) {
+				String tmpAll = reader.readLine();
+				String[] tmpOne = tmpAll.split(" ");
+				for (int i = 0; i < 6; i++) {
+					recode.add(tmpOne[i]);
+				}
+				allRecode.add(Change.arrToModel(recode));
+				recode = new ArrayList<>();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+		}
+		return allRecode;
+	}
+	
+	public static ObservableList<Model>  getRecoding( ObservableList<Model> observableList){
+		if(observableList == null){
+			return null;
+		}
+		observableList.clear();
+		observableList.addAll(IORecord.readFile());
+		return observableList;
+	}
+	
+	public static boolean writeFile(ObservableList<Model> allRecode){
+		if (allRecode == null || allRecode.size() == 0) {
+			return false;
+		}
+		ArrayList<Model> arrayList = new ArrayList<Model>();
+		for(int i= 0; i < allRecode.size(); i++){
+			arrayList.add(allRecode.get(i));
+		}
+		return writeFile(arrayList);
+	}
+
+	public static boolean writeFile(ArrayList<Model> allRecode) {
+		if (allRecode == null || allRecode.size() == 0) {
+			return false;
+		}
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("记录.txt"), false));
+			for (int i = 0; i < allRecode.size(); i++) {
+				StringBuilder tmp = new StringBuilder("");
+				for (int j = 0; j < AllSize; j++) {
+					tmp.append(MySwitch.mySwitch(allRecode.get(i), j) + " ");
+				}
+				tmp.append("\r\n");
+				writer.write(tmp.toString());
+			}
+			writer.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+	}
+}

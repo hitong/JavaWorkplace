@@ -1,0 +1,38 @@
+package localPattern;
+
+public class MyChess {
+	int iLocal;// 内部坐标
+	int board;// 棋盘号
+	
+	public MyChess(int oLocal, int iLocal, int board) {
+		super();
+		this.oLocal = oLocal;
+		this.iLocal = iLocal;
+		this.board = board;
+	}
+
+	public int getoLocal() {
+		return oLocal;
+	}
+
+	public void setoLocal(int oLocal) {
+		this.oLocal = oLocal;
+	}
+
+	public int getiLocal() {
+		return iLocal;
+	}
+
+	public void setiLocal(int iLocal) {
+		this.iLocal = iLocal;
+	}
+
+	public int getBoard() {
+		return board;
+	}
+
+	public void setBoard(int board) {
+		this.board = board;
+	}
+
+}

@@ -1,0 +1,44 @@
+package 实验四.other;
+
+import java.lang.reflect.Method;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
+
+public class ResultToArray {
+	public static ArrayList<Object> change(Object obj, Entity entity, ResultSet resultSet) {
+		ArrayList<Object> arrayList = new ArrayList<Object>();
+		try {
+			ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+			int fieldSize = resultSetMetaData.getColumnCount();
+			Method[] setMethod = new Method[fieldSize];
+
+			for (int i = 0; i < resultSetMetaData.getColumnCount(); i++) {
+				String methodName = null;
+				for(int j = 0; j < entity.getFields().size(); j++){
+					if(entity.getFields().get(j).getColumn().equals(resultSetMetaData.getColumnName(i + 1))){
+						methodName = "set" + utils.StringUtils.upperCaseFirthLatter(entity.getFields().get(j).getFieldName());
+					}
+				}
+				String methodType = utils.StringUtils.dbTypeTOJType(resultSetMetaData.getColumnTypeName(i + 1));
+				setMethod[i] = obj.getClass().getMethod(methodName, Class.forName(methodType));
+			}
+			
+			for(int i = 0; i < resultSet.getRow(); i++){
+				Object tmpObj = obj.getClass().newInstance();
+				for(int j = 0; j < fieldSize; j++){
+					try{
+						setMethod[j].invoke(tmpObj, resultSet.getString(j + 1));
+					}catch(IllegalArgumentException e){
+						setMethod[j].invoke(tmpObj, Short.parseShort(resultSet.getString(j + 1)));
+					}
+				}
+				arrayList.add(tmpObj);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return arrayList;
+	}
+}

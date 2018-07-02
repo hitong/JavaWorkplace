@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="com.genuitec.eclipse.javascript.debug.core.jsWebAppLaunchConfigurationType">
+<stringAttribute key="jee.initialUrl" value="http://localhost:8080/WebBuilde/"/>
+<stringAttribute key="jee.projectName" value="WebBuilde"/>
+<booleanAttribute key="jee.server.debug" value="true"/>
+<stringAttribute key="jee.server.host" value="localhost"/>
+<stringAttribute key="jee.server.id" value="Tomcat v8.5 Server at localhost"/>
+<stringAttribute key="jee.server.port.http" value="8080"/>
+<stringAttribute key="jee.server.port.https" value="off"/>
+<stringAttribute key="jsAppBrowserLaunchingDelegateId" value="com.genuitec.eclipse.javascript.debug.chrome.webAppBrowser"/>
+<stringAttribute key="jsAppTypeLaunchingDelegateId" value="com.genuitec.eclipse.javascript.jee.webAppType"/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/WebBuilde"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="4"/>
+</listAttribute>
+</launchConfiguration>

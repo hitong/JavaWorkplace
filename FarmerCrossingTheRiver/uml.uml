@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_qb8akM37EdqwVrslYOdUDA" name="uml">
+  <packagedElement xmi:type="uml:Package" xmi:id="_RgxgcPaxEee8Gqm48Hkf7Q" name="main">
+    <packagedElement xmi:type="uml:Class" xmi:id="_Rg3AAPaxEee8Gqm48Hkf7Q" name="FarmerCrossingTheRiver">
+      <ownedAttribute xmi:id="_RiLOoPaxEee8Gqm48Hkf7Q" name="NUMBER_OF_NODES" visibility="public" isStatic="true" isReadOnly="true">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_RiLOofaxEee8Gqm48Hkf7Q" value="16"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_RiPgEPaxEee8Gqm48Hkf7Q" name="edge" visibility="package" type="_RiNq4PaxEee8Gqm48Hkf7Q"/>
+      <ownedAttribute xmi:id="_RiR8UPaxEee8Gqm48Hkf7Q" name="verticese" visibility="package" type="_RiQuMPaxEee8Gqm48Hkf7Q"/>
+      <nestedClassifier xmi:type="uml:Class" xmi:id="_Rg41MPaxEee8Gqm48Hkf7Q" name="Edge" visibility="package">
+        <ownedComment xmi:id="_Rg7RcPaxEee8Gqm48Hkf7Q">
+          <body>/** 
+ * 用于构造边集
+ * @author Sun
+ */
+</body>
+        </ownedComment>
+        <ownedAttribute xmi:id="_RileUPaxEee8Gqm48Hkf7Q" name="start" visibility="package">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+          <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_RileUfaxEee8Gqm48Hkf7Q"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_RinTgPaxEee8Gqm48Hkf7Q" name="end" visibility="package">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+          <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_RinTgfaxEee8Gqm48Hkf7Q"/>
+        </ownedAttribute>
+      </nestedClassifier>
+      <ownedOperation xmi:id="_RiTxgPaxEee8Gqm48Hkf7Q" name="createAdjacencyLists" visibility="package">
+        <ownedComment xmi:id="_RiU_oPaxEee8Gqm48Hkf7Q">
+          <body>/** 
+ * 创建邻接线性表
+ * @param edge
+ */
+</body>
+        </ownedComment>
+        <ownedParameter xmi:id="_RiTxgfaxEee8Gqm48Hkf7Q" name="edge" type="_Rg9Go_axEee8Gqm48Hkf7Q"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_RiVmsPaxEee8Gqm48Hkf7Q" name="dfs" visibility="public">
+        <ownedComment xmi:id="_RiW00PaxEee8Gqm48Hkf7Q">
+          <body>/** 
+ * 初始化深度搜索条件，调用深度搜索方法
+ * @param
+ * @return 返回路径数组
+ */
+</body>
+        </ownedComment>
+        <ownedParameter xmi:id="_RiVmsfaxEee8Gqm48Hkf7Q" name="v">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+        <ownedParameter xmi:id="_RiVmsvaxEee8Gqm48Hkf7Q" name="return" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:id="_RiW00vaxEee8Gqm48Hkf7Q" name="dfs" visibility="private">
+        <ownedComment xmi:id="_RiYqAPaxEee8Gqm48Hkf7Q">
+          <body>/** 
+ * 深度算法具体实现
+ * @param v
+ * @param parent
+ * @param serchOrders
+ * @param isVisited
+ * @return
+ */
+</body>
+        </ownedComment>
+        <ownedParameter xmi:id="_RiW00_axEee8Gqm48Hkf7Q" name="v">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+        <ownedParameter xmi:id="_RiW01PaxEee8Gqm48Hkf7Q" name="parent">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_RiW01faxEee8Gqm48Hkf7Q" value="*"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_RiW01vaxEee8Gqm48Hkf7Q"/>
+        </ownedParameter>
+        <ownedParameter xmi:id="_RiW01_axEee8Gqm48Hkf7Q" name="isVisited">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_RiW02PaxEee8Gqm48Hkf7Q" value="*"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_RiW02faxEee8Gqm48Hkf7Q"/>
+        </ownedParameter>
+        <ownedParameter xmi:id="_RiW02vaxEee8Gqm48Hkf7Q" name="return" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:id="_RiYqAfaxEee8Gqm48Hkf7Q" name="printPath" visibility="public">
+        <ownedComment xmi:id="_RiZ4IPaxEee8Gqm48Hkf7Q">
+          <body>/** 
+ * 通过传入路径数组，打印路径
+ * @param parent
+ */
+</body>
+        </ownedComment>
+        <ownedParameter xmi:id="_RiYqAvaxEee8Gqm48Hkf7Q" name="parent">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_RiYqA_axEee8Gqm48Hkf7Q" value="*"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_RiYqBPaxEee8Gqm48Hkf7Q"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:id="_RiZ4IvaxEee8Gqm48Hkf7Q" name="translate" visibility="private">
+        <ownedComment xmi:id="_RibGQPaxEee8Gqm48Hkf7Q">
+          <body>/** 
+ * 将节点翻译成英文字符串
+ * @param o1
+ * @param o2
+ * @return
+ */
+</body>
+        </ownedComment>
+        <ownedParameter xmi:id="_RiZ4I_axEee8Gqm48Hkf7Q" name="o1">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+        <ownedParameter xmi:id="_RiZ4JPaxEee8Gqm48Hkf7Q" name="o2">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+        <ownedParameter xmi:id="_RiZ4JfaxEee8Gqm48Hkf7Q" name="return" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:id="_RibtUPaxEee8Gqm48Hkf7Q" name="getEdges" visibility="package">
+        <ownedComment xmi:id="_Ric7cPaxEee8Gqm48Hkf7Q">
+          <body>/** 
+ * 获得边集
+ * @return
+ */
+</body>
+        </ownedComment>
+        <ownedParameter xmi:id="_RibtUfaxEee8Gqm48Hkf7Q" name="return" type="_Rg9Go_axEee8Gqm48Hkf7Q" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_Ric7cfaxEee8Gqm48Hkf7Q" name="canChange" visibility="package">
+        <ownedComment xmi:id="_RieJkPaxEee8Gqm48Hkf7Q">
+          <body>/** 
+ * 判断是否能连接当前两点，例如：农夫在南岸，羊在北岸，不能够形成农夫和羊同时移动
+ * @param node
+ * @param j
+ * @return
+ */
+</body>
+        </ownedComment>
+        <ownedParameter xmi:id="_Ric7cvaxEee8Gqm48Hkf7Q" name="node">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+        <ownedParameter xmi:id="_Ric7c_axEee8Gqm48Hkf7Q" name="j">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+        <ownedParameter xmi:id="_Ric7dPaxEee8Gqm48Hkf7Q" name="return" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:id="_RiewoPaxEee8Gqm48Hkf7Q" name="getFlippedNode" visibility="package">
+        <ownedComment xmi:id="_RifXsPaxEee8Gqm48Hkf7Q">
+          <body>/** 
+ * 切换当前当前状态
+ * @param node
+ * @return
+ */
+</body>
+        </ownedComment>
+        <ownedParameter xmi:id="_RiewofaxEee8Gqm48Hkf7Q" name="node">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+        <ownedParameter xmi:id="_RiewovaxEee8Gqm48Hkf7Q" name="return" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:id="_Rif-wPaxEee8Gqm48Hkf7Q" name="change" visibility="package">
+        <ownedComment xmi:id="_RihM4PaxEee8Gqm48Hkf7Q">
+          <body>/** 
+ * 通过接收的节点代码，和修改位置，更改指定位置状态并返回，如：1111，0 -> 1110
+ * @param node
+ * @param i
+ * @return
+ */
+</body>
+        </ownedComment>
+        <ownedParameter xmi:id="_Rif-wfaxEee8Gqm48Hkf7Q" name="node">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+        <ownedParameter xmi:id="_Rif-wvaxEee8Gqm48Hkf7Q" name="i">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+        <ownedParameter xmi:id="_Rif-w_axEee8Gqm48Hkf7Q" name="return" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:id="_RihM4faxEee8Gqm48Hkf7Q" name="getNode" visibility="package">
+        <ownedComment xmi:id="_RijCEPaxEee8Gqm48Hkf7Q">
+          <body>/** 
+ * 通过指定下标，返回其相对应的节点代码，如：下标为15，返回整形代码，1111
+ * @param i
+ * @return
+ */
+</body>
+        </ownedComment>
+        <ownedParameter xmi:id="_RihM4vaxEee8Gqm48Hkf7Q" name="i">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+        <ownedParameter xmi:id="_RihM4_axEee8Gqm48Hkf7Q" name="return" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:id="_RijCEfaxEee8Gqm48Hkf7Q" name="main" visibility="public" isStatic="true">
+        <ownedParameter xmi:id="_RijCEvaxEee8Gqm48Hkf7Q" name="args">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_RijCE_axEee8Gqm48Hkf7Q" value="*"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_RijCFPaxEee8Gqm48Hkf7Q"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_Rg9GoPaxEee8Gqm48Hkf7Q" name="java">
+    <packagedElement xmi:type="uml:Package" xmi:id="_Rg9GofaxEee8Gqm48Hkf7Q" name="util">
+      <packagedElement xmi:type="uml:DataType" xmi:id="_Rg9GovaxEee8Gqm48Hkf7Q" name="ArrayList"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_Rg9Go_axEee8Gqm48Hkf7Q" name="List"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:DataType" xmi:id="_RiNq4PaxEee8Gqm48Hkf7Q" name="List&lt;Edge>"/>
+  <packagedElement xmi:type="uml:DataType" xmi:id="_RiQuMPaxEee8Gqm48Hkf7Q" name="List&lt;List&lt;Integer>>"/>
+</uml:Model>

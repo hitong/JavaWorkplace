@@ -1,0 +1,13 @@
+package 实验四.connection;
+
+import java.sql.Connection;
+
+public class MyCon {
+	public final static int FREE = 100;
+	public final static int BUSY = 101;
+	public final static int CLOSED = 102;
+	private Connection connection;
+	private int state = FREE;
+	
+	
+}

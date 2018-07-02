@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="759.0" prefWidth="1061.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.NineTailController">
+   <children>
+      <ScrollPane layoutX="14.0" layoutY="335.0" prefHeight="419.0" prefWidth="1036.0">
+         <content>
+            <HBox fx:id="solution" />
+         </content>
+      </ScrollPane>
+      <Button layoutX="776.0" layoutY="148.0" mnemonicParsing="false" onAction="#randomLayout" prefHeight="38.0" prefWidth="192.0" text="Random Position" />
+      <Button layoutX="776.0" layoutY="202.0" mnemonicParsing="false" onAction="#startSolve" prefHeight="38.0" prefWidth="192.0" text="Start Solve" />
+      <Button layoutX="776.0" layoutY="255.0" mnemonicParsing="false" onAction="#startOver" prefHeight="38.0" prefWidth="192.0" text="Start Over" />
+      <ScrollPane layoutX="14.0" layoutY="40.0" prefHeight="273.0" prefWidth="683.0">
+         <content>
+            <Pane fx:id="start" />
+         </content>
+      </ScrollPane>
+      <Label layoutX="14.0" layoutY="25.0" text="Start Position:" />
+      <Label layoutX="14.0" layoutY="320.0" text="Solutions:" />
+      <TextField fx:id="text" layoutX="830.0" layoutY="110.0" onAction="#manualLayout" onKeyTyped="#manualLayout" prefHeight="23.0" prefWidth="136.0" promptText="Numbrt Of Position" />
+      <Label layoutX="776.0" layoutY="114.0" text="Position：" />
+      <Label alignment="CENTER" layoutX="769.0" layoutY="33.0" prefHeight="50.0" prefWidth="208.0" text="Flip Coin ">
+         <font>
+            <Font size="32.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#56d348" />
+                  <Stop color="#656b3ae3" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+   </children>
+</AnchorPane>

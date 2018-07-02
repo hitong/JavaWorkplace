@@ -1,0 +1,8 @@
+package localPattern;
+
+public class MyChess {
+	int iLocal;// 内部坐标
+	int board;// 棋盘号
+	int index;//列表号
+
+}

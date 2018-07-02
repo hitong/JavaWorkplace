@@ -1,0 +1,18 @@
+package utils;
+
+public class NullTest {
+	private static boolean string(String str) {
+		if(str == "" || str.trim().equals("")) {
+			return true;
+		} 
+		return false;
+	}
+	
+	public static boolean isNull(Object obj){
+		if(obj == null){
+			return true;
+		}
+		System.out.println(obj.getClass().getName());
+		return string(obj.toString());
+	}
+}

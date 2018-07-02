@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db>
+  <entity class="db.Person" table="person">
+     <field name="personId" column="PersonId" type="String" key="true"/>
+     <field name="personName" column="Name" type="String"/>
+     <field name="birthday" column="Birthday" type="Date"/>
+     <field name="sex" column="Sex" type="Short"/>
+  </entity>
+  
+  <entity class="db.Animal" table="animal">
+  		    <field name="id" column="Id" type="String" key="true"/>
+    	 	<field name="type" column="Type" type="String"/>
+     		<field name="birthDate" column="BirthDate" type="Date"/>
+    		 <field name="sex" column="Sex" type="Short"/>
+     </entity>
+</db>

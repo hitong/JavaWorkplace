@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="425.0" prefWidth="727.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Version2Controller">
+   <children>
+      <HBox focusTraversable="true" layoutX="14.0" layoutY="37.0" prefHeight="139.0" prefWidth="428.0">
+         <children>
+            <Pane fx:id="img1" prefHeight="200.0" prefWidth="200.0" />
+            <Pane fx:id="img2" prefHeight="200.0" prefWidth="200.0" />
+            <Pane fx:id="img3" prefHeight="200.0" prefWidth="200.0" />
+            <Pane fx:id="img4" prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </HBox>
+      <ScrollPane layoutX="14.0" layoutY="213.0" prefHeight="200.0" prefWidth="428.0">
+         <content>
+            <VBox fx:id="answer" />
+         </content>
+      </ScrollPane>
+      <Button layoutX="546.0" layoutY="164.0" mnemonicParsing="false" onAction="#refresh" prefHeight="44.0" prefWidth="161.0" text="Refresh" />
+      <Button layoutX="546.0" layoutY="224.0" mnemonicParsing="false" onAction="#showSolutions" prefHeight="44.0" prefWidth="161.0" text="Show Solutions" />
+      <Button layoutX="546.0" layoutY="359.0" mnemonicParsing="false" onAction="#exit" prefHeight="44.0" prefWidth="161.0" text="Exit" />
+      <Button layoutX="546.0" layoutY="291.0" mnemonicParsing="false" onAction="#modeSwitch" prefHeight="44.0" prefWidth="161.0" text="Mode Switch" />
+      <TextField fx:id="text" layoutX="546.0" layoutY="111.0" onAction="#verify" promptText="Vertry Your Answer" />
+      <Label layoutX="14.0" layoutY="14.0" text="Cards：">
+         <font>
+            <Font name="System Italic" size="19.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="546.0" layoutY="37.0" prefHeight="44.0" prefWidth="161.0" text="24点游戏" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0" startY="0.07142857142857142">
+               <stops>
+                  <Stop color="BLACK" />
+                  <Stop color="#cd2d2d" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <Label layoutX="14.0" layoutY="179.0" text="Solution：">
+         <font>
+            <Font name="System Italic" size="19.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

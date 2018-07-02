@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="565.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PracticeController">
+   <center>
+      <TextArea fx:id="text" editable="false" prefHeight="200.0" prefWidth="200.0" promptText="暂无数据显示" wrapText="true" BorderPane.alignment="CENTER" />
+   </center>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="文件">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#deCodingCode" text="选择压缩文件" />
+              <MenuItem mnemonicParsing="false" onAction="#compresingCode" text="选择文本文件" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="显示">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#showCompressData" text="显示压缩后代码" />
+                  <MenuItem mnemonicParsing="false" onAction="#showData" text="显示原始文件" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="操作">
+               <items>
+                  <MenuItem fx:id="save" disable="true" mnemonicParsing="false" onAction="#save" text="保存" />
+                  <MenuItem mnemonicParsing="false" onAction="#back" text="返回" />
+               </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+</BorderPane>

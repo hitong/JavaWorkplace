@@ -1,0 +1,60 @@
+package client;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import model.User;
+import utils.InversionControl;
+
+public class ChatViewControl implements InversionControl<LaunchClient>{
+	@FXML
+	private Button name;
+	
+	@FXML
+	private Button search;
+	
+	@FXML
+	private TabPane tab;
+
+	LaunchClient main;
+	
+	@FXML
+	private TableView<User> table;
+	
+	@FXML
+	private TableColumn<User, String> viewName;
+	
+	@FXML
+	private TableColumn<User, String> viewState;
+	
+	@FXML
+	private void add(){
+		Tab tmpTab = new Tab();
+		System.out.println(tmpTab.getTooltip());
+		tmpTab.setGraphic(new Button("222"));
+		tmpTab.setText("123");
+		tmpTab.setClosable(true);
+
+		this.tab.getTabs().add(tmpTab);
+	}
+	
+	@FXML
+	private void change(){
+		System.out.println("change");
+	}
+	
+	@FXML
+	private void close(){
+		main.close();
+	}
+	
+	@Override
+	public void setMain(LaunchClient t) {
+		// TODO Auto-generated method stub
+		main = t;
+		name.setText(main.user.getName());
+	}
+}

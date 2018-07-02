@@ -1,0 +1,60 @@
+package 实验四.connection;
+
+import java.lang.reflect.Method;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import com.mysql.jdbc.ResultSetMetaData;
+
+import 实验四.other.EntityField;
+import 实验四.other.ResultToArray;
+
+
+public class RunSql {
+	public static boolean returnBool(String sql) {
+		ConPool conPool = ConPool.getIntance();
+		MyCon myCon = conPool.getCon();
+		Statement statement;
+		boolean flag = false;
+		try {
+			statement = myCon.getConnection().createStatement();
+			statement.execute(sql);
+			if(statement.getUpdateCount() > 0){
+				flag = true;
+			}
+			else{
+				ResultSet resultSet = statement.getResultSet();
+				if(resultSet.next()){
+					flag = true;
+				}
+				resultSet.close();
+			}
+			statement.close();
+			conPool.setFree(myCon);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return flag;
+	}
+	
+	public static ArrayList<Object> returnArray(Object obj,String sql) {
+		ConPool conPool = ConPool.getIntance();
+		MyCon myCon = conPool.getCon();
+		Statement statement;
+		ArrayList<Object> arrayList;
+		try {
+			statement = myCon.getConnection().createStatement();
+			statement.execute(sql);
+			ResultSet resultSet = statement.getResultSet();
+			arrayList = ResultToArray.change(obj, resultSet);
+			resultSet.close();
+			statement.close();
+			conPool.setFree(myCon);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}
+	}
+	
+}

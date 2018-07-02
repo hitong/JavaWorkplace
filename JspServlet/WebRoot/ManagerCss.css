@@ -1,0 +1,180 @@
+body
+{
+    margin-left:auto;
+    margin-right:auto;
+    margin:0;
+    border:0;
+    height: 80%;
+}
+
+*,.head{
+    font-family: "Microsoft YaHei";
+    margin:0;
+    border:0;
+}
+
+a{
+    cursor:pointer;
+    color:white;
+}
+
+.head{
+    width:30%;
+    font-size: 46px;
+    color: white;
+}
+
+.top{
+    width:100%;
+    padding-bottom: 1%;
+    background-color: #1ac81d;
+}
+
+.middle{
+    width: 100%;
+    height: 103.6%;
+    background-color: #eeeeee;
+}
+
+.concent {
+    width: 80%;
+    margin-right: 10%;
+    margin-left: 10%;
+    background-color: white;
+}
+
+.company{
+    width:100%;
+    padding-top:1.22%;
+    padding-bottom: 1.25%;
+    background-color: #1ac81d;
+    text-align: center ;
+    font-size: 22px;
+    color: white;
+}
+
+.exit{
+    float: right;
+    color:white;
+    font-size: 20px;
+}
+
+.a{
+    color: #FFFFFF;
+}
+
+.left{
+    width:10%;
+    background-color: #FFFFFF;
+    margin:0;
+    height: 100%;
+    float:left;
+}
+
+.right{
+    width:90%;
+    height:100%;
+    background-color: #3aff75;
+    float: right;
+}
+
+.nav{
+    padding-top: 10px;
+    font-size:20px;
+    text-align: center;
+    border-bottom: ridge;
+    border-right: ridge;
+    border-color: #3aff75;
+    background-color: #ffffff;
+    height: 50px;
+}
+
+.nav:hover{
+    opacity: 0.8;
+    background-color: rgba(54, 255, 113, 0.4);
+}
+
+
+.insert_shop,.insert_user{
+    width:100%;
+    height: 100%;;
+    background-color: #00ff00;
+}
+
+.searchBook{
+    width:90%;
+    height:15%;
+    float: left;
+    background-color: blueviolet;
+    padding-top:3.5%;
+    margin-left:5%;
+    margin-right: 5%;
+}
+
+.Myinput-group{
+    width: 30%;
+    float: left;
+}
+
+.titile{
+    float:left;
+    margin-left: 5%;
+    margin-top: 1%;
+}
+
+.add{
+    float:right;
+}
+
+.form-control{
+    width:100%;
+}
+
+.modal-dialog{
+    margin-top: 5%;
+    width: 30%;
+}
+
+.input-group-addon{
+    width:5%;
+    background-color: white;
+}
+
+.table-striped,.table-bordered{
+	width:90%;
+	margin-left:5%;
+}
+
+.td1{
+	width:8%;
+}
+
+.td2{
+	width:8%;
+}
+.td3{
+	width:10%;
+}
+.td4{
+	width:10%;
+}
+.td5{
+	width:5%;
+}
+.td6{
+	width:5%;
+}
+.td7{
+	width:5%;
+}
+.td8{
+	width:8%;
+}
+
+.pagination{
+	float:right;
+	margin-right:5%;
+	margin-top: -0% ;
+}
+
+

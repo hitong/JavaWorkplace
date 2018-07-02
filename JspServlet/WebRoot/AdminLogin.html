@@ -1,0 +1,26 @@
+﻿<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="AdminCss1.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Book Store后台登录</title>
+</head>
+<body>
+    <CENTER>
+        <form class = "main" action="servlet/LogIN"  method="post">
+            <h3 class = "head">Book Store 后台系统</h3>
+            <br/>
+            <div class="bs-example bs-example-form input-group-lg input-group-lg" role="form">
+                <input type="text" class="form-control" placeholder="用户名" name = "adminname">
+                <br>
+                <input type="password" class="form-control " placeholder="密码" name = "adminpassword">
+                <br>
+                <br>
+                <button type="submit" class="btn btn-primary btn-lg ">登录</button>
+            </div>
+        </form>
+    </CENTER>
+</body>
+</html>

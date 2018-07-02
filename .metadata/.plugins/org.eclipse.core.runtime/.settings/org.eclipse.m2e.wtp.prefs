@@ -1,0 +1,10 @@
+com.genuitec.eclipse.maven.wtp.hibernate.enabler.enabled=false
+com.genuitec.eclipse.maven.wtp.spring.enabler.enabled=false
+com.genuitec.eclipse.maven.wtp.struts.enabler.enabled=false
+eclipse.preferences.version=1
+org.eclipse.m2e.wtp.ear.applicationXmlInBuilDir=true
+org.eclipse.m2e.wtp.enableM2eWtp=false
+org.eclipse.m2e.wtp.jaxrs.enabler.enabled=false
+org.eclipse.m2e.wtp.jpa.enabler.enabled=false
+org.eclipse.m2e.wtp.jsf.enabler.enabled=false
+org.eclipse.m2e.wtp.war.archiverFilesInBuilDir=true

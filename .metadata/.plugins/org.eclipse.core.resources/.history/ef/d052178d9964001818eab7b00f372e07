@@ -1,0 +1,10 @@
+package 实验五.第4题;
+
+import java.util.Date;
+
+public class Person {
+	private String name;
+	private String id;
+	private short sex;
+	private Date birthDate;
+}

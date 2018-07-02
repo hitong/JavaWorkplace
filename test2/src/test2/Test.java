@@ -1,0 +1,9 @@
+package test2;
+
+import javafx.scene.control.TextArea;
+
+public class Test {
+
+	TextArea textArea = new TextArea();
+	
+}

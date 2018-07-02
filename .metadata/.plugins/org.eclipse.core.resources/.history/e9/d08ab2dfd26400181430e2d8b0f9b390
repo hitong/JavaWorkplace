@@ -1,0 +1,9 @@
+package 实验四.db;
+
+import java.sql.Date;
+
+public class Animal {
+	private String type;
+	private Date birhDate;
+	private String id;
+}

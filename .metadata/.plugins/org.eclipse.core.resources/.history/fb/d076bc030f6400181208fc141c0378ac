@@ -1,0 +1,6 @@
+package utils;
+
+public class ConPool{
+	public final static int FREE = 1;
+	public final static int BUSY = 0;
+}

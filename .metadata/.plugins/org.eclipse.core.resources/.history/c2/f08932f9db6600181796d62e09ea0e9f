@@ -1,0 +1,22 @@
+package work;
+
+import java.util.ArrayList;
+
+import javafx.collections.ObservableList;
+
+public class Search {
+	public static ArrayList<Model> search(ArrayList<Model> saveDataFromFile, String terget, int[] choise){
+		ArrayList<Model> tmp = new ArrayList<>();
+		
+		for(int i = 0; i < saveDataFromFile.size(); i++) {
+			StringBuilder str = new StringBuilder("");
+			for(int j = 0; j < choise.length; j++) {
+				str.append(MySwitch.mySwitch(saveDataFromFile.get(i) , choise[j]));
+			}
+			if(str.toString().contains(terget)) {
+				tmp.add(saveDataFromFile.get(i));
+			}
+		}
+		return tmp;
+	}
+}

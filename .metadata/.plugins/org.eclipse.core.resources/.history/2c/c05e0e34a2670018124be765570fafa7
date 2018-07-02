@@ -1,0 +1,11 @@
+package 实验四.utils;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Target;
+
+import com.sun.java.util.jar.pack.Attribute.Layout.Element;
+
+@Target(ElementType)
+public @interface ClassAnnotation {
+	
+}

@@ -1,0 +1,25 @@
+package viewModel;
+
+
+import javafx.scene.Parent;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+
+public class UserList extends Parent{
+	private String userId;
+	private String userName;
+	
+	public UserList(String userId,String userName){
+		this.userId = userId;
+		this.userName = userName;
+	}
+	
+	public void getView(){
+		Label id = new Label(userId);
+		Label name = new Label(userName);
+		id.setId(userId);
+		name.setId(userName);
+		VBox vBox = new VBox();
+	}
+}

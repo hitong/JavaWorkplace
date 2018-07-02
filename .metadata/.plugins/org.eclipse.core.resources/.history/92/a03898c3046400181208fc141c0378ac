@@ -1,0 +1,9 @@
+package 实验四.connection;
+
+public class MyCon {
+	public final static int FREE = 100;//空闲
+	public final static int BUSY = 101;//忙碌
+	public final static int CLOSED = 102;//关闭
+	
+	
+}

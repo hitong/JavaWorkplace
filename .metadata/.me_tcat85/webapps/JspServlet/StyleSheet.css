@@ -1,0 +1,114 @@
+[genuitec-file-id="wc2-6"],[genuitec-lp-path="/JspServlet/WebRoot/StyleSheet.css"],[genuitec-lp-enabled=false]{
+  /* for codelive */
+}
+
+body
+{
+    margin-left:auto;
+    margin-right:auto;
+    height:80%;
+    background: url("bgBook.jpg") no-repeat;
+}
+
+*,.head{
+    font-family: "Microsoft YaHei";
+    margin:0;
+    border:0;
+}
+
+.head{
+    width:30%;
+    font-size: 46px;
+    color: white;
+}
+
+.top{
+    width:100%;
+    padding-top:1%;
+    padding-bottom: 1%;
+}
+
+.head_Concent{
+    margin-right: auto;
+    margin-left: auto;
+    width:80%;
+}
+.login{
+    margin-top: 0.5%;
+    font-size: 15px;
+    color: white;
+    float: right;
+}
+
+.input-group{
+	width:65%;
+}
+.concent{
+    width:80%;
+    margin-right: 10%;
+    margin-left: 10%;
+    height:101%;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+.middle{
+    width: 100%;
+    background-color: rgba(238, 238, 238, 0);
+}
+
+.menu{
+    width:15%;
+    height:100%;
+    float: left;
+    margin-right: 0;
+    background-color: rgba(127, 128, 127, 0.78);
+}
+
+.book{
+    float: right;
+    width:81%;
+    height:86%;
+    margin-top: 1.2%;
+    margin-right: 1%;
+}
+
+ul{
+    font-size: 20px;
+}
+
+.menu-ctrl{
+    margin-top: 10%;
+}
+.number{
+    width:80%;
+    margin-top:0.76%;
+    margin-right: 1.5%;
+    float:right;
+    height:10%;
+}
+
+.pagination{
+    float: right;
+}
+
+.company{
+    width:100%;
+    padding-top:1.22%;
+    padding-bottom: 1.25%;
+    background-color: rgba(0,0,0,0);
+    text-align: center ;
+    font-size: 22px;
+    color: white;
+}
+
+input{
+    border: solid;
+}
+
+ul:hover{
+	 opacity: 0.8;
+	 background-color: rgba(54, 255, 113, 0.4);
+}
+
+.table-bordered{
+	text-align:center;
+}

@@ -1,0 +1,104 @@
+package view;
+
+import java.io.IOException;
+
+import application.Main;
+import javafx.fxml.FXML;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import work.Model;
+
+public class ViewControl {
+	@FXML
+	private TableView<Model> table;
+	
+	@FXML
+	private TableColumn<Model, String>  numberCol;
+	
+	@FXML
+	private TableColumn<Model, String>  mainConcent;
+	
+	@FXML
+	private TableColumn<Model, String>  comeFromText;
+	
+	@FXML
+	private TableColumn<Model, String>  comeFromFile;
+	
+	@FXML
+	private TableColumn<Model, String>  data;
+	
+	@FXML
+	private TableColumn<Model, String>  depart;
+	
+	@FXML
+	private TableColumn<Model, String>  sender;
+	
+	@FXML 
+	private TextArea search;
+	
+
+	@FXML
+	private void searchClick(){
+		System.out.println("searchClick");
+	}
+	
+	@FXML
+	private void changeClick(){
+		System.out.println("changeClick");
+	}
+	
+	@FXML
+	private void delClick(){
+		System.out.println("delClick");
+	}
+	
+	@FXML
+	private void addClick(){
+		System.out.println("addClick");
+		try {
+			main.showAlter();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void initialize() {
+		mainConcent.setCellValueFactory(cellData -> cellData.getValue().getMainConcent());
+		comeFromText.setCellValueFactory(cellData -> cellData.getValue().getComeFromText());
+		comeFromFile.setCellValueFactory(cellData -> cellData.getValue().getComeFromFile());
+		data.setCellValueFactory(cellData -> cellData.getValue().getData());
+		depart.setCellValueFactory(cellData -> cellData.getValue().getDepart());
+		sender.setCellValueFactory(cellData -> cellData.getValue().getSender());
+		numberCol.setCellFactory((col) -> {
+            TableCell<Model, String> cell = new TableCell<Model, String>() {
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    this.setText();
+                    this.setGraphic(null);
+                    if (!empty) {
+                        int rowIndex = this.getIndex() + 1;
+                        this.setText(String.valueOf(rowIndex));
+                    }
+                }
+            };
+            return cell;
+        });
+	}
+	
+	Main main;
+	
+	public void setMain(Main main) {
+		this.main = main;
+		this.table.setItems(main.getData());
+	}
+	
+	public void showSearch(){
+		System.out.println(search.getText());
+		main.showSearch(search.getText());
+	}
+}

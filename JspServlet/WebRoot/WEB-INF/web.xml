@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+  <servlet>
+    <servlet-name>test</servlet-name>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <description>This is the description of my J2EE component</description>
+    <servlet-class>test.test</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Login</servlet-name>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <description>This is the description of my J2EE component</description>
+    <servlet-class>user.Login</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>LogOn</servlet-name>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <description>This is the description of my J2EE component</description>
+    <servlet-class>user.LogOn</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>NewUser</servlet-name>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <description>This is the description of my J2EE component</description>
+    <servlet-class>user.NewUser</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>AdminLogin</servlet-name>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <description>This is the description of my J2EE component</description>
+    <servlet-class>admin.AdminLogin</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>UpBook</servlet-name>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <description>This is the description of my J2EE component</description>
+    <servlet-class>admin.UpBook</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>SplitPage</servlet-name>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <description>This is the description of my J2EE component</description>
+    <servlet-class>util.SplitPage</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Nav</servlet-name>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <description>This is the description of my J2EE component</description>
+    <servlet-class>admin.Nav</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>AddUser</servlet-name>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <description>This is the description of my J2EE component</description>
+    <servlet-class>admin.AddUser</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>UpdateUser</servlet-name>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <description>This is the description of my J2EE component</description>
+    <servlet-class>admin.UpdateUser</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>search</servlet-name>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <description>This is the description of my J2EE component</description>
+    <servlet-class>admin.search</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Exit</servlet-name>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <description>This is the description of my J2EE component</description>
+    <servlet-class>admin.Exit</servlet-class>
+  </servlet>
+
+
+
+
+
+
+
+
+
+
+
+
+  <servlet-mapping>
+    <servlet-name>test</servlet-name>
+    <url-pattern>/servlet/test</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Login</servlet-name>
+    <url-pattern>/servlet/Login</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>LogOn</servlet-name>
+    <url-pattern>/servlet/LogOn</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>NewUser</servlet-name>
+    <url-pattern>/servlet/NewUser</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AdminLogin</servlet-name>
+    <url-pattern>/servlet/AdminLogin</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UpBook</servlet-name>
+    <url-pattern>/servlet/UpBook</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SplitPage</servlet-name>
+    <url-pattern>/servlet/SplitPage</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Nav</servlet-name>
+    <url-pattern>/servlet/Nav</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AddUser</servlet-name>
+    <url-pattern>/servlet/AddUser</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UpdateUser</servlet-name>
+    <url-pattern>/servlet/UpdateUser</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>search</servlet-name>
+    <url-pattern>/servlet/search</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Exit</servlet-name>
+    <url-pattern>/servlet/Exit</url-pattern>
+  </servlet-mapping>
+
+</web-app>

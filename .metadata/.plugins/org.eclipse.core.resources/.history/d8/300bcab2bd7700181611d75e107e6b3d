@@ -1,0 +1,46 @@
+//package utils;
+//
+//import java.io.BufferedInputStream;
+//import java.io.ByteArrayOutputStream;
+//import java.io.FileInputStream;
+//import java.io.IOException;
+//import java.util.LinkedList;
+//
+//import model.Message;
+//import model.MessageService;
+//
+//public class SendFile implements Runnable{
+//	
+//	public SendFile() {
+//	}
+//
+//	@Override
+//	public void run() {
+//		// TODO Auto-generated method stub
+//		try {
+//			BufferedInputStream in = new BufferedInputStream(new FileInputStream(path));
+//			byte[] tmp = new byte[1024 * 4];
+//			int length;
+//			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//			LinkedList<byte[]> linkedList = new LinkedList<>();
+//			while ((length = in.read(tmp)) != -1) {
+//				byteArrayOutputStream.write(tmp, 0, length);
+//				linkedList.add(byteArrayOutputStream.toByteArray());
+//				byteArrayOutputStream.reset();
+//			}
+//			in.close();
+//			byteArrayOutputStream.close();
+//			session.write(new Message(MessageService.FILE, "start", new String[] { 0 + "", linkedList.size() + "", type },
+//					main.getMain().user.getUserId(), friend.getUserId().getValue(), ""));
+//			for(int i = 0; i < linkedList.size(); i++){
+//				main.getMain().session.write(new Message(MessageService.FILE,i + "",linkedList.get(i)));
+//			}
+//			main.getMain().session
+//					.write(new Message(MessageService.FILE, "end", new String[] { 0 + "", linkedList.size() + "", type },
+//							main.getMain().user.getUserId(), friend.getUserId().getValue(), ""));
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+//}

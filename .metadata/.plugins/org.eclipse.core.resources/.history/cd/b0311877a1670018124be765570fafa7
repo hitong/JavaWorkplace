@@ -1,0 +1,8 @@
+package 实验四.utils;
+
+public class Snippet {
+	public static void main(String[] args) {
+		System.out.println(bd.selectObj(animal));
+	}
+}
+

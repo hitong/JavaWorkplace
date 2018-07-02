@@ -1,0 +1,28 @@
+package 实验四.db;
+
+import java.util.ArrayList;
+
+import 实验四.other.GenneralBaseDao;
+
+public class PersonService {
+   private GenneralBaseDao<Person> bd = new GenneralBaseDao<Person>();
+   public boolean deletePerson(Person person){
+	   return bd.deleteObj(person);
+   }
+   
+   public boolean addPerson(Person person){
+	   return bd.addObj(person);
+   }
+   
+   public boolean updatePerson(Person person){
+	   return bd.updateObj(person);
+   }
+   
+   public boolean selectPerson(Person person){
+	   return bd.selectObj(person);
+   }
+   
+   public ArrayList<Person> queryPerson(String sql){
+	   return bd.queryObj(new Person(),sql);
+   }
+}

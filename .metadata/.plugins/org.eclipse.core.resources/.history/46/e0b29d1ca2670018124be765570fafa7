@@ -1,0 +1,7 @@
+package 实验四.utils;
+
+
+
+public @interface ClassAnnotation {
+	
+}

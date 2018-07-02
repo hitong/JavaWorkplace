@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="658.0" prefWidth="1033.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mapView.MapController">
+   <bottom>
+      <GridPane alignment="CENTER" maxHeight="141.0" maxWidth="946.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="134.0" prefWidth="946.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="232.0" minWidth="10.0" prefWidth="118.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="429.0" minWidth="10.0" prefWidth="196.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="41.0" minWidth="2.0" prefWidth="41.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="320.0" minWidth="10.0" prefWidth="118.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="439.0" minWidth="10.0" prefWidth="196.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="10.0" prefWidth="31.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="392.0" minWidth="10.0" prefWidth="185.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="392.0" minWidth="10.0" prefWidth="57.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Add a new vertrx" />
+            <Label text="Add a new edge" GridPane.columnIndex="3" />
+            <Label text="Vertex name:" GridPane.rowIndex="1" />
+            <Label text="Vertex u(index):" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Label text="X-coordinate:" GridPane.rowIndex="2" />
+            <Label text="Y-coordinate:" GridPane.rowIndex="3" />
+            <Label text="Vertex v(index):" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Label text="Weight(int):" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <TextField fx:id="vertexName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="x" />
+            <TextField fx:id="y" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="pre" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <TextField fx:id="last" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            <TextField fx:id="weight" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <Button mnemonicParsing="false" onAction="#addVertex" prefHeight="29.0" prefWidth="647.0" text="Add Vertex" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Button mnemonicParsing="false" onAction="#addEdge" prefHeight="29.0" prefWidth="916.0" text="Add Edge" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+            <Button mnemonicParsing="false" onAction="#showDFSTree" prefHeight="25.0" prefWidth="233.0" text="Display DFS Tree" GridPane.columnIndex="6" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin></Button>
+            <Button mnemonicParsing="false" onAction="#showBFSTree" prefHeight="25.0" prefWidth="211.0" text="Display BFS Tree" GridPane.columnIndex="6" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin></Button>
+            <Button mnemonicParsing="false" onAction="#showSP" prefHeight="25.0" prefWidth="211.0" text="Display Shortest Path" GridPane.columnIndex="6" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin></Button>
+            <Label text="Features" GridPane.columnIndex="6" />
+            <TextField fx:id="start" promptText="Source Index" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
+         </BorderPane.margin>
+      </GridPane>
+   </bottom>
+   <center>
+      <ScrollPane prefHeight="496.0" prefWidth="1033.0" BorderPane.alignment="CENTER">
+         <content>
+            <Pane fx:id="pane" />
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>

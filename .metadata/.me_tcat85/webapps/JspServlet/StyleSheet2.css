@@ -1,0 +1,26 @@
+[genuitec-file-id="wc2-7"],[genuitec-lp-path="/JspServlet/WebRoot/StyleSheet2.css"],[genuitec-lp-enabled=false]{
+  /* for codelive */
+}
+
+.concent{
+//    background-color: blueviolet;
+}
+
+.logOn{
+    padding-top: 1.5%;
+    margin-left:25%;
+}
+
+.logOnHead{
+    margin-top: 0;
+    padding-top: 1%;
+    text-align: center;
+}
+
+.input-group,input-group-lg,input-group-addon,form-control{
+    width: 70%;
+}
+
+.logOnButton{
+    margin-left: 64.45%;
+}

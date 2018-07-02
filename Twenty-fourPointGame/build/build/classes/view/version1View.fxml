@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="759.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Version1Controller">
+   <children>
+      <HBox layoutX="92.0" layoutY="104.0">
+         <children>
+            <Pane fx:id="img1" prefHeight="192.0" prefWidth="144.0" />
+            <Pane fx:id="img2" prefHeight="200.0" prefWidth="144.0" />
+            <Pane fx:id="img3" prefHeight="200.0" prefWidth="144.0" />
+            <Pane fx:id="img4" prefHeight="200.0" prefWidth="144.0" />
+         </children>
+      </HBox>
+      <Button layoutX="583.0" layoutY="14.0" mnemonicParsing="false" onAction="#refresh" prefHeight="35.0" prefWidth="124.0" text="Refrash" />
+      <Label layoutX="25.0" layoutY="353.0" text="Enter a expression:" />
+      <TextField fx:id="text" layoutX="144.0" layoutY="349.0" prefHeight="23.0" prefWidth="408.0" />
+      <Button layoutX="587.0" layoutY="343.0" mnemonicParsing="false" onAction="#verify" prefHeight="35.0" prefWidth="117.0" text="Verify" />
+   </children>
+</AnchorPane>

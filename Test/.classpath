@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="D:/JavaWorkplace/mysql-connector-java-5.1.46.jar"/>
+	<classpathentry kind="lib" path="D:/JavaWorkplace/apache-mina-2.0.18-bin/apache-mina-2.0.18/lib/slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="lib" path="D:/JavaWorkplace/apache-mina-2.0.18-bin/apache-mina-2.0.18/dist/mina-core-2.0.18.jar"/>
+	<classpathentry kind="lib" path="D:/JavaWorkplace/org.json.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,0 +1,36 @@
+package application;
+
+public class MyThread {
+	private int pid;
+	private float arrTime;
+	private int longth;
+	private float runTime;
+	private int status;
+	
+	public MyThread(int longth){
+		this.longth = longth;
+	}
+	
+	public int getPid() {
+		return pid;
+	}
+	public float getArrTime() {
+		return arrTime;
+	}
+	public int getLongth() {
+		return longth;
+	}
+	public void setLongth(int longth) {
+		this.longth = longth;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	
+	public float getRunTime() {
+		return runTime;
+	}
+}

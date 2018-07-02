@@ -1,0 +1,20 @@
+package work;
+
+import java.util.ArrayList;
+
+public class Search {
+	public static ArrayList<Model> search(ArrayList<Model> all, String terget, int[] choise){
+		ArrayList<Model> tmp = new ArrayList<>();
+		
+		for(int i = 0; i < all.size(); i++) {
+			StringBuilder str = new StringBuilder("");
+			for(int j = 0; j < choise.length; j++) {
+				str.append(MySwitch.mySwitch(all.get(i) , choise[j]));
+			}
+			if(str.toString().equals(terget)) {
+				tmp.add(all.get(i));
+			}
+		}
+		return tmp;
+	}
+}

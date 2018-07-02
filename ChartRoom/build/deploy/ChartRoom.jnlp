@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="ChartRoom.jnlp">
+  <information>
+    <title>ChartRoom</title>
+    <vendor>application</vendor>
+    <description>C</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="ChartRoom.jar" size="3617381" download="eager" />
+    <jar href="libs\annotations-api.jar" size="18111" download="eager" />
+    <jar href="libs\catalina-ant.jar" size="53138" download="eager" />
+    <jar href="libs\catalina-ha.jar" size="118471" download="eager" />
+    <jar href="libs\catalina-storeconfig.jar" size="74734" download="eager" />
+    <jar href="libs\catalina-tribes.jar" size="269048" download="eager" />
+    <jar href="libs\catalina.jar" size="1589631" download="eager" />
+    <jar href="libs\dom4j-1.6.jar" size="313359" download="eager" />
+    <jar href="libs\ecj-4.5.1.jar" size="2393390" download="eager" />
+    <jar href="libs\el-api.jar" size="81438" download="eager" />
+    <jar href="libs\jasper-el.jar" size="163137" download="eager" />
+    <jar href="libs\jasper.jar" size="585130" download="eager" />
+    <jar href="libs\jaspic-api.jar" size="26752" download="eager" />
+    <jar href="libs\javax.servlet.jsp.jstl.jar" size="44653" download="eager" />
+    <jar href="libs\jsp-api.jar" size="61656" download="eager" />
+    <jar href="libs\jstl-impl-1.2.2.jar" size="402100" download="eager" />
+    <jar href="libs\mina-core-2.0.18.jar" size="655765" download="eager" />
+    <jar href="libs\mysql-connector-java-5.1.46.jar" size="1004838" download="eager" />
+    <jar href="libs\org.json.jar" size="48796" download="eager" />
+    <jar href="libs\servlet-api.jar" size="243791" download="eager" />
+    <jar href="libs\slf4j-api-1.7.25.jar" size="41203" download="eager" />
+    <jar href="libs\tomcat-api.jar" size="10504" download="eager" />
+    <jar href="libs\tomcat-coyote.jar" size="761356" download="eager" />
+    <jar href="libs\tomcat-dbcp.jar" size="251072" download="eager" />
+    <jar href="libs\tomcat-i18n-es.jar" size="65829" download="eager" />
+    <jar href="libs\tomcat-i18n-fr.jar" size="39545" download="eager" />
+    <jar href="libs\tomcat-i18n-ja.jar" size="42114" download="eager" />
+    <jar href="libs\tomcat-jdbc.jar" size="140854" download="eager" />
+    <jar href="libs\tomcat-jni.jar" size="33871" download="eager" />
+    <jar href="libs\tomcat-util-scan.jar" size="201547" download="eager" />
+    <jar href="libs\tomcat-util.jar" size="130864" download="eager" />
+    <jar href="libs\tomcat-websocket.jar" size="209709" download="eager" />
+    <jar href="libs\websocket-api.jar" size="36662" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="0" height="0" main-class="client.LaunchClient"  name="C" />
+  <update check="background"/>
+</jnlp>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="442.0" prefWidth="937.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="listView.LinkedListController">
+   <children>
+      <VBox layoutX="180.0" layoutY="63.0" prefHeight="442.0" prefWidth="937.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ScrollPane prefHeight="362.0" prefWidth="937.0">
+               <content>
+                  <Pane fx:id="pane">
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding></Pane>
+               </content>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="20.0" />
+               </VBox.margin>
+            </ScrollPane>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <center>
+                  <HBox alignment="CENTER" fillHeight="false" prefHeight="146.0" prefWidth="937.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label alignment="CENTER" text="Enter a value: " />
+                        <TextField fx:id="value" alignment="CENTER" />
+                        <Label alignment="CENTER" text="Enter an index: ">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin></Label>
+                        <TextField fx:id="index" alignment="CENTER" />
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#search" text="Search">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin></Button>
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#insert" text="Insert">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin></Button>
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#delete" text="Delete">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin></Button>
+                     </children>
+                  </HBox>
+               </center>
+            </BorderPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

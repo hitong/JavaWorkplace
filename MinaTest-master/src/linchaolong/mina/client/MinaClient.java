@@ -1,0 +1,148 @@
+package linchaolong.mina.client;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.CharacterCodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
+import org.apache.mina.core.buffer.IoBuffer;
+import org.apache.mina.core.future.ConnectFuture;
+import org.apache.mina.core.future.IoFuture;
+import org.apache.mina.core.future.IoFutureListener;
+import org.apache.mina.core.service.IoHandler;
+import org.apache.mina.core.session.IdleStatus;
+import org.apache.mina.core.session.IoSession;
+import org.apache.mina.filter.codec.ProtocolCodecFilter;
+import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
+import org.apache.mina.transport.socket.nio.NioDatagramConnector;
+
+// Mina Socket Client
+//https://mina.apache.org/mina-project/userguide/ch2-basics/sample-udp-client.html
+public class MinaClient implements IoHandler {
+
+	private IoSession session = null; 
+	
+	public static void main(String[] args) {
+		MinaClient client = new MinaClient();
+		client.start();
+	}
+	
+	private void start() {
+		
+		NioDatagramConnector connector = new NioDatagramConnector();
+		// 设置会话管理器
+		connector.setHandler( this );
+		// 添加编码过滤
+		connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory()));
+		// 连接服务器
+		ConnectFuture connFuture = connector.connect( new InetSocketAddress("127.0.0.1", 2222 ));
+		
+		connFuture.addListener( new IoFutureListener(){
+            public void operationComplete(IoFuture future) {
+            	System.out.println("operationComplete..");
+                ConnectFuture connFuture = (ConnectFuture)future;
+                if( connFuture.isConnected() ){
+                	session = future.getSession();
+                    try {
+                    	sendData();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println("error Not connected...exiting");
+                }
+            }
+        });
+		//等待异步操作完成且不可中断，操作完成将会回调listener
+		connFuture.awaitUninterruptibly();
+		
+		CharsetEncoder encoder = Charset.forName("UTF-8").newEncoder();
+		IoSession session = connFuture.getSession();
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new InputStreamReader(System.in));
+			
+			while(true){
+				String line = reader.readLine();
+				if ("quit".equals(line)) {
+					break;
+				}
+				// 编码
+				ByteBuffer byteBuff = encoder.encode(CharBuffer.wrap(line));
+				session.write(byteBuff.toString());
+			}
+		} catch (CharacterCodingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				reader.close();
+			} catch (IOException e) {
+			}
+		}
+	}
+
+	private void sendData() throws InterruptedException {
+	    for (int i = 0; i < 30; i++) {
+	        long free = Runtime.getRuntime().freeMemory();
+	        IoBuffer buffer = IoBuffer.allocate(8);
+	        buffer.putLong(free);
+	        buffer.flip();
+	        session.write(buffer);
+	        try {
+	            Thread.sleep(1000);
+	        } catch (InterruptedException e) {
+	            e.printStackTrace();
+	            throw new InterruptedException(e.getMessage());
+	        }
+	    }
+	}
+	
+	@Override
+	public void sessionCreated(IoSession session) throws Exception {
+		System.out.println("client sessionCreated" + session.getId());
+	}
+
+	@Override
+	public void sessionOpened(IoSession session) throws Exception {
+		System.out.println("client sessionOpened" + session.getId());
+	}
+
+	@Override
+	public void sessionClosed(IoSession session) throws Exception {
+		System.out.println("client sessionClosed" + session.getId());
+	}
+
+	@Override
+	public void sessionIdle(IoSession session, IdleStatus status)
+			throws Exception {
+		System.out.println("client sessionIdle" + session.getId());
+	}
+
+	@Override
+	public void exceptionCaught(IoSession session, Throwable cause)
+			throws Exception {
+		cause.printStackTrace();
+	}
+
+	@Override
+	public void messageReceived(IoSession session, Object message)
+			throws Exception {
+		System.out.println("client messageReceived" + session.getId() + " msg=" + message);
+	}
+
+	@Override
+	public void messageSent(IoSession session, Object message) throws Exception {
+		System.out.println("client messageSent" + session.getId() + " msg=" + message);
+	}
+
+	@Override
+	public void inputClosed(IoSession session) throws Exception {
+		System.out.println("client inputClosed" + session.getId());
+	}
+}

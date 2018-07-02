@@ -1,0 +1,18 @@
+package utils;
+
+public class StringUtils {
+	public static String upperCaseFirthLatter(String str){
+		return str.substring(0,1).toUpperCase() + str.substring(1);
+	}
+	
+	public static String dbTypeTOJType(String str){
+		switch (str) {
+		case "VARCHAR":return "java.lang.String";
+		case "CHAR":return "java.lang.String";
+		case "BLOB":return "java.lang.byte[]";
+		case "INTEGER UNSIGNED": return "java.lang.Long";
+		default:
+			break;
+		}
+	}
+}

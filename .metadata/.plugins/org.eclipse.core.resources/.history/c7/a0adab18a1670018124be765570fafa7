@@ -1,0 +1,54 @@
+package 实验四.test;
+
+import java.sql.Date;
+import java.util.ArrayList;
+
+import 实验四.db.Animal;
+import 实验四.db.Person;
+import 实验四.db.PersonService;
+import 实验四.other.GenneralBaseDao;
+
+public class ManagePerson {
+
+	@SuppressWarnings("deprecation")
+	public static void main(String[] args) {
+		PersonService personService = new PersonService();
+		Person person = new Person();
+		person.setPersonId(System.currentTimeMillis() + "");
+		person.setBirthday(new Date(2018-1900,10,1));
+		person.setPersonName("添加测试");
+		person.setSex((short) 0);
+		ArrayList<Person> arrayList = personService.queryPerson("select * from person");
+		for(Person tmpPerson: arrayList){
+			System.out.println(tmpPerson);
+		}
+		 System.out.println("对象添加: " + personService.addPerson(person));
+		 System.out.println(person);
+		 try {
+			Thread.sleep(10000);
+		
+		 System.out.println("对象查询:  " + personService.selectPerson(person));
+		 person.setPersonName("XXXXX");
+		 System.out.println("对象更新:  " + personService.updatePerson(person));
+		 Thread.sleep(3000);
+		 System.out.println("对象删除:  " + personService.deletePerson(person));
+		 person.setPersonName("YYYYYY");
+		 System.out.println("对象更新:  " + personService.updatePerson(person));
+		 System.out.println("对象查询:  " + personService.selectPerson(person));
+		 } catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		GenneralBaseDao<Animal> bd = new GenneralBaseDao<>();
+		Animal animal = new Animal();
+		animal.setId(System.currentTimeMillis() + "");
+		animal.setBirthday(new Date(2011-1900,11,20));
+		animal.setType("食肉系");
+		System.out.println(bd.addObj(animal));
+		System.out.println(bd.selectObj(animal));
+		ArrayList<Animal> arrayList2 = bd.queryObj(animal, "select * from animal");
+		for(Animal tmpAnimal: arrayList2){
+			System.out.println(tmpAnimal);
+		}
+	}
+}

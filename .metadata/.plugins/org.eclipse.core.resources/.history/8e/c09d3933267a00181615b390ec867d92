@@ -1,0 +1,12 @@
+package localPattern;
+
+import java.util.HashMap;
+
+public class LocalPatternService {
+		int[] hasMove = new int[49];
+		HashMap<Integer, int[]> localPattern = new HashMap<>();
+		
+		public LocalPatternService(){
+			localPattern.put(1,new int[]{1,2,3,4,5,6,7});
+		}
+}

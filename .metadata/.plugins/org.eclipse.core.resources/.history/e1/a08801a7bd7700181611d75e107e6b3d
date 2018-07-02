@@ -1,0 +1,9 @@
+package utils;
+
+import org.json.JSONObject;
+
+public class DataSeries {
+	public static String name(JSONObject json){
+		return "";
+	}
+}
