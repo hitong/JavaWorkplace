@@ -1,0 +1,1 @@
+singularity-cli g vue curd -o mh-web\\src\\view -c gen-entity.yml.erb

@@ -1,0 +1,15 @@
+group 'org.ec'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile project(":ec-xm:xm-service")
+    compile project(":ec-xm:xm-dao")
+}

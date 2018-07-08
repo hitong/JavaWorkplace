@@ -1,6 +1,0 @@
-#Tomcat publish data
-#Tue May 22 21:55:12 CST 2018
-org.eclipse.jst.jee.server\:MyWeb=D\:\\JavaWorkplace\\.metadata\\.me_tcat85\\webapps\\MyWeb
-org.eclipse.jst.jee.server\:WebBuilde=D\:\\JavaWorkplace\\.metadata\\.me_tcat85\\webapps\\WebBuilde
-org.eclipse.jst.jee.server\:JspServlet=D\:\\JavaWorkplace\\.metadata\\.me_tcat85\\webapps\\JspServlet
-org.eclipse.jst.jee.server\:TestWeb=D\:\\JavaWorkplace\\.metadata\\.me_tcat85\\webapps\\TestWeb

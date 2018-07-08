@@ -1,8 +1,0 @@
-package localPattern;
-
-import java.util.HashMap;
-import java.util.List;
-
-public class LocalPatternService {
-		public HashMap<int[],String> localPattern = new HashMap<>();
-}

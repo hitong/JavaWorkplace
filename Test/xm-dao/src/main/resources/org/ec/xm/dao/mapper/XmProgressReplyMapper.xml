@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ec.xm.dao.mapper.XmProgressReplyMapper">
+  <resultMap id="BaseResultMap" type="org.ec.xm.entity.XmProgressReply">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="organization_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="replyman_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="progress_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="task_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="created_at" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="updated_at" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="content" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+    </constructor>
+  </resultMap>
+
+  <delete id="deleteFromProgressReply" parameterType="java.lang.Integer">
+    delete from xm_progress_reply
+    where task_id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from xm_progress_reply
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.ec.xm.entity.XmProgressReply">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into xm_progress_reply (organization_id, replyman_id, progress_id, 
+      task_id, created_at, updated_at, 
+      content)
+    values (#{organizationId,jdbcType=INTEGER}, #{replymanId,jdbcType=INTEGER}, #{progressId,jdbcType=INTEGER}, 
+      #{taskId,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.ec.xm.entity.XmProgressReply">
+    update xm_progress_reply
+    set organization_id = #{organizationId,jdbcType=INTEGER},
+      replyman_id = #{replymanId,jdbcType=INTEGER},
+      progress_id = #{progressId,jdbcType=INTEGER},
+      task_id = #{taskId,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, organization_id, replyman_id, progress_id, task_id, created_at, updated_at, 
+    content
+    from xm_progress_reply
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, organization_id, replyman_id, progress_id, task_id, created_at, updated_at, 
+    content
+    from xm_progress_reply
+  </select>
+  <insert id="insertReply" parameterType="org.ec.xm.entity.XmProgressReply">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into xm_progress_reply (organization_id, replyman_id, progress_id,
+    task_id,
+    content)
+    values (#{organizationId,jdbcType=INTEGER}, #{replymanId,jdbcType=INTEGER}, #{progressId,jdbcType=INTEGER},
+    #{taskId,jdbcType=INTEGER},
+    #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <select id="getProgressReplyNum" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select count(1)
+    from xm_progress_reply
+    where xm_progress_reply.progress_id = #{progress_id,jdbcType=INTEGER}
+  </select>
+  <select id="getProgressReply" parameterType="Map" resultMap="BaseResultMap">
+    select id, organization_id, replyman_id, progress_id, task_id, created_at, updated_at,
+    content
+    from xm_progress_reply
+    where xm_progress_reply.progress_id = #{progress_id,jdbcType=INTEGER}
+    ORDER BY updated_at DESC
+    limit #{page,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+  <select id="getProgressReplyUserName" parameterType="java.lang.Integer" resultType="java.lang.String">
+    SELECT ge_user.`name` from ge_user
+    where id= #{replyman_id, jdbcType=INTEGER}
+  </select>
+</mapper>

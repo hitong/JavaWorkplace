@@ -1,0 +1,24 @@
+spring:
+  datasource:
+      url: jdbc:mysql://${MYSQL_HOST}/${MYSQL_DATABASE}?characterEncoding=utf-8
+      # 使用druid数据源
+      username: ${MYSQL_USER}
+      password: ${MYSQL_PASS}
+      driver-class-name: com.mysql.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+
+server:
+  port: ${PORT:8080}
+
+security:
+  basic:
+    enabled: false
+
+ribbon:
+  ReadTimeout: 20000
+  ConnectTimeout: 20000
+  ServerListRefreshInterval: 1000
+  eureka:
+     enabled: false
+  consul:
+     enabled: true

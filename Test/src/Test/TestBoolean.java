@@ -2,6 +2,10 @@ package Test;
 
 public class TestBoolean {
 	public static void main(String[] args){
+		var c = 123;
+		System.out.println(c);
+		c = 3123123;
+		System.out.println(c);
 		int t = 0;
 		boolean b = false;
 		int[][] tb = new int[11][22];

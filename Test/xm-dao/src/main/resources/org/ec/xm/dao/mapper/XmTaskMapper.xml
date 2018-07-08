@@ -1,0 +1,1040 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ec.xm.dao.mapper.XmTaskMapper">
+  <resultMap id="BaseResultMap" type="org.ec.xm.entity.XmTask">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="project_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="type" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="begin_at" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="finish_at" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="enable" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="project_config_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="status" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="data_template_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="created_organization_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="superior_organization_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="organization_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="returnman_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="returned_at" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="urgeman_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="urged_at" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="task_mode" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="superior_task_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="created_at" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="updated_at" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="remark" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+    </constructor>
+  </resultMap>
+    <!--首页返回类型-->
+    <resultMap id="TasksInfo" type="org.ec.xm.dto.XM0201.XM0201A01DTO">
+        <result column="year" property="year" />
+        <result column="allTask" property="allTask" />
+        <result column="beforeSend" property="beforeSend" />
+        <result column="execution" property="execution" />
+        <result column="finish" property="finish" />
+        <result column="timeout" property="timeout" />
+        <result column="returnNum" property="returnNum" />
+        <result column="urgeNum" property="urgeNum" />
+    </resultMap>
+
+    <resultMap id="ReturnTask" type="org.ec.xm.dto.XM0201.XM0201A02DTO">
+        <result column="taskId" property="taskId" />
+        <result column="name" property="name" />
+    </resultMap>
+
+    <!--首页SQL语句-->
+    <select id="getTasksInfo" resultMap="TasksInfo">
+        SELECT
+        `year` year,
+        COUNT(xm_task.id) allTask,
+        SUM(CASE when xm_task.`status` = '待下发' THEN 1 ELSE 0 END) beforeSend,
+        SUM(CASE when xm_task.`status` = '执行中' THEN 1 ELSE 0 END) execution,
+        SUM(CASE when xm_task.`status` = '执行完成' THEN 1 ELSE 0 END) finish,
+        SUM(CASE when xm_task.finish_at &lt; NOW() THEN 1 ELSE 0 END) timeout,
+        SUM(CASE when xm_task.returnman_id IS NOT NULL THEN 1 ELSE 0 END) returnNum,
+        SUM(CASE when xm_task.urgeman_id IS NOT NULL THEN 1 ELSE 0 END) urgeNum
+        FROM
+        xm_task, xm_project
+        where xm_task.organization_id = #{arg0} and xm_task.project_id = xm_project.id
+        GROUP BY `year`
+    </select>
+    <select id="getReturnTask" resultMap="ReturnTask">
+        select id taskId, name name
+        from xm_task
+        where returnman_id is not null and organization_id = #{arg0}
+        order by returned_at desc
+    </select>
+
+    <select id="getUrgeTask" resultMap="ReturnTask">
+        select id taskId, name name
+        from xm_task
+        where urgeman_id is not null and organization_id = #{arg0}
+        order by urged_at desc
+    </select>
+
+
+    <!--市级返回类型-->
+    <resultMap id="AllCityTask" type="org.ec.xm.dto.XM0204.XM0204A01DTO">
+        <result column="taskId" property="taskId" />
+        <result column="projectId" property="projectId" />
+        <result column="projectName" property="projectName" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="money" property="money" />
+        <result column="createdAt" property="createdAt" />
+        <result column="beginAt" property="beginAt" />
+        <result column="finishAt" property="finishAt" />
+        <result column="enable" property="enable" />
+        <result column="status" property="status" />
+        <result column="remark" property="remark" />
+        <result column="modelId" property="modelId" />
+    </resultMap>
+
+    <resultMap id="CitySearchTask" type="org.ec.xm.dto.XM0204.XM0204A05DTO">
+        <result column="taskId" property="taskId" />
+        <result column="projectId" property="projectId" />
+        <result column="projectName" property="projectName" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="createdAt" property="createdAt" />
+        <result column="beginAt" property="beginAt" />
+        <result column="finishAt" property="finishAt" />
+        <result column="enable" property="enable" />
+        <result column="status" property="status" />
+        <result column="remark" property="remark" />
+        <result column="modelId" property="modelId" />
+    </resultMap>
+
+    <resultMap id="CityProjectTask" type="org.ec.xm.dto.XM0204.XM0204A07DTO">
+        <result column="taskId" property="taskId" />
+        <result column="projectId" property="projectId" />
+        <result column="projectName" property="projectName" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="createdAt" property="createdAt" />
+        <result column="beginAt" property="beginAt" />
+        <result column="finishAt" property="finishAt" />
+        <result column="enable" property="enable" />
+        <result column="status" property="status" />
+        <result column="remark" property="remark" />
+        <result column="modelId" property="modelId" />
+    </resultMap>
+
+    <resultMap id="CityYearTask" type="org.ec.xm.dto.XM0204.XM0204A13DTO">
+        <result column="taskId" property="taskId" />
+        <result column="projectId" property="projectId" />
+        <result column="projectName" property="projectName" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="createdAt" property="createdAt" />
+        <result column="beginAt" property="beginAt" />
+        <result column="finishAt" property="finishAt" />
+        <result column="enable" property="enable" />
+        <result column="status" property="status" />
+        <result column="remark" property="remark" />
+        <result column="modelId" property="modelId" />
+    </resultMap>
+
+    <resultMap id="CitySelectTree" type="org.ec.xm.dto.XM0204.XM0204A06DTO">
+        <id column="id" ></id>
+        <result column="year" property="year" />
+        <collection property="children" select="getCitySelectTreeChildren" column="{organization_id=id,year=year}">
+        </collection>
+    </resultMap>
+
+    <resultMap id="AllProject" type="org.ec.xm.dto.XM0204.XM0204A10DTO">
+        <result column="id" property="projectId" />
+        <result column="name" property="projectName" />
+    </resultMap>
+
+    <resultMap id="CityLowOrganization" type="org.ec.xm.dto.XM0204.XM0204A08DTO">
+        <result column="id" property="organizationId" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="leader" property="leader" />
+    </resultMap>
+
+    <!--市级SQL语句-->
+    <select id="getCitySelectTree"  resultMap="CitySelectTree">
+        select DISTINCT xm_project.year year, xm_task.organization_id id
+        from xm_project, xm_task
+        where xm_task.organization_id=#{arg0} and xm_task.project_id = xm_project.id
+    </select>
+
+    <select id="getCitySelectTreeChildren" resultType="org.ec.xm.dto.XM0204.XM0204A06S01DTO">
+        select distinct xm_project.id as projectId, xm_project.name
+        from xm_project, xm_task
+        where xm_project.year=#{year} and xm_task.organization_id=#{organization_id} and xm_task.project_id = xm_project.id
+    </select>
+
+    <select id="getAllCityTask" resultMap="AllCityTask">
+        select distinct xm_task.id taskId, xm_task.project_id projectId, xm_project.`name` projectName, xm_task.name name, xm_task.type type, xm_task.begin_at beginAt, xm_task.created_at createdAt, xm_task.finish_at finishAt, xm_task.enable enable, xm_task.`status` status, xm_task.remark remark, xm_task.data_template_id modelId
+        from xm_task, xm_project
+        where xm_task.project_id = xm_project.id and
+        xm_task.organization_id = #{arg0}
+        order by xm_task.created_at desc
+    </select>
+
+    <select id="getCitySearchTask" resultMap="CitySearchTask">
+        select distinct xm_task.id taskId, xm_task.project_id projectId, xm_project.`name` projectName, xm_task.name name, xm_task.type type, xm_task.begin_at beginAt, xm_task.created_at createdAt, xm_task.finish_at finishAt, xm_task.enable enable, xm_task.`status` status, xm_task.remark remark, xm_task.data_template_id modelId
+        from xm_task, xm_project
+        where xm_task.project_id = xm_project.id and
+        xm_task.organization_id = #{arg0} and
+        (xm_task.name like #{arg1} or
+         xm_project.name like #{arg1})
+        order by xm_task.created_at desc
+    </select>
+
+    <select id="getCityProjectTask" resultMap="CityProjectTask">
+        select distinct xm_task.id taskId, xm_task.project_id projectId, xm_project.`name` projectName, xm_task.name name, xm_task.type type, xm_task.begin_at beginAt, xm_task.created_at createdAt, xm_task.finish_at finishAt, xm_task.enable enable, xm_task.`status` status, xm_task.remark remark, xm_task.data_template_id modelId
+        from xm_task, xm_project
+        where xm_task.project_id = xm_project.id and
+        xm_task.organization_id = #{arg0} and
+        xm_project.id = #{arg1}
+        <if test="param3!=''">
+            and xm_task.status=#{arg2}
+        </if>
+        order by xm_task.created_at desc
+    </select>
+
+    <select id="getCityYearTask" resultMap="CityYearTask">
+        select distinct xm_task.id taskId, xm_task.project_id projectId, xm_project.`name` projectName, xm_task.name name, xm_task.type type, xm_task.begin_at beginAt, xm_task.created_at createdAt, xm_task.finish_at finishAt, xm_task.enable enable, xm_task.`status` status, xm_task.remark remark, xm_task.data_template_id modelId
+        from xm_task, xm_project
+        where xm_task.project_id = xm_project.id and
+        xm_task.organization_id = #{arg0} and
+        xm_project.year = #{arg1}
+        order by xm_task.created_at desc
+    </select>
+
+    <select id="getAllProject" resultMap="AllProject">
+        select id, name
+        from xm_project
+        where status = 1
+    </select>
+
+    <select id="getCityLowOrganization"  resultMap="CityLowOrganization">
+        select distinct ge_organization.id id, code, ge_organization.name name, GROUP_CONCAT(DISTINCT(ge_user.name)) leader
+        from ge_organization LEFT JOIN ge_organization_manager on ge_organization.id = ge_organization_manager.organization_id
+							 LEFT JOIN ge_user on ge_user.id = ge_organization_manager.user_id
+        where 		ge_organization.parent_id = #{arg1}
+        and ge_organization.org_type = 4
+        and ge_organization.id not in (select distinct ge_organization.id
+        from ge_organization, xm_task, ge_user, ge_organization_manager
+        where   xm_task.organization_id = ge_organization.id
+        and xm_task.superior_task_id = #{arg0}
+        and ge_organization.parent_id = #{arg1}
+        and ge_organization.org_type = 4
+        and ge_organization_manager.organization_id = ge_organization.id
+        and ge_user.id = ge_organization_manager.user_id)
+        GROUP BY ge_organization.id
+    </select>
+
+    <select id="getDistribedTaskid" resultType="Integer">
+        select distinct id
+        from xm_task
+        where superior_task_id = #{arg0}
+    </select>
+
+    <update id="setNotDistrib">
+        update xm_task
+        set status = '待下发'
+        where id = #{arg0}
+    </update>
+
+    <update id="disable">
+        update xm_task
+        set enable = 0
+        where id = #{arg0}
+    </update>
+
+    <update id="disableLowTask">
+        update xm_task
+        set enable = 0
+        where superior_task_id = #{arg0}
+    </update>
+
+    <update id="enableTask">
+        update xm_task
+        set enable = 1
+        where id = #{arg0}
+    </update>
+
+    <update id="enableLowTask">
+        update xm_task
+        set enable = 1
+        where superior_task_id = #{arg0}
+    </update>
+
+    <update id="editTask" parameterType="org.ec.xm.entity.XmTask">
+    update xm_task
+     set project_id = #{projectId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      begin_at = #{beginAt,jdbcType=TIMESTAMP},
+      finish_at = #{finishAt,jdbcType=TIMESTAMP},
+      data_template_id = #{dataTemplateId,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=LONGVARCHAR},
+      type = #{type,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <update id="setDistrib">
+    update xm_task
+    set status = '执行中'
+    where id = #{arg0}
+  </update>
+
+    <update id="setFinishTask">
+        update xm_task
+        set status = '执行完成'
+        where id = #{arg0}
+    </update>
+
+    <update id="setFinishNULL">
+      UPDATE xm_task
+     SET xm_task.returnman_id = NULL,
+      xm_task.returned_at = NULL,
+     xm_task.urgeman_id = NULL,
+      xm_task.urged_at = NULL
+     WHERE
+	xm_task.id =  #{arg0}
+    </update>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from xm_task
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <delete id="cancleDistrib">
+        delete from xm_task where superior_task_id = #{arg0}
+    </delete>
+
+    <delete id="deleteFileByTaskId">
+        delete from xm_project_file where task_id = #{arg0}
+    </delete>
+
+    <delete id="deleteProgressByTaskId">
+        delete from xm_progress where task_id = #{arg0}
+    </delete>
+
+    <delete id="deleteProgressReplyByTaskId">
+        delete from xm_progress_reply where task_id = #{arg0}
+    </delete>
+
+    <insert id="insert" parameterType="org.ec.xm.entity.XmTask">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into xm_task (project_id, name, type,
+        begin_at, finish_at, enable,
+        project_config_id, status, data_template_id,
+        created_organization_id, superior_organization_id,
+        organization_id, returnman_id, returned_at,
+        urgeman_id, urged_at, task_mode,
+        created_at, updated_at, remark, superior_task_id
+        )
+        values (#{projectId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+        #{beginAt,jdbcType=TIMESTAMP}, #{finishAt,jdbcType=TIMESTAMP}, #{enable,jdbcType=BIT},
+        #{projectConfigId,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, #{dataTemplateId,jdbcType=INTEGER},
+        #{createdOrganizationId,jdbcType=INTEGER}, #{superiorOrganizationId,jdbcType=INTEGER},
+        #{organizationId,jdbcType=INTEGER}, #{returnmanId,jdbcType=INTEGER}, #{returnedAt,jdbcType=TIMESTAMP},
+        #{urgemanId,jdbcType=INTEGER}, #{urgedAt,jdbcType=TIMESTAMP}, #{taskMode,jdbcType=VARCHAR},
+        #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{remark,jdbcType=LONGVARCHAR},
+        #{superiorTaskId,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <!--区级返回类型 -->
+    <resultMap id="AllAreaTask" type="org.ec.xm.dto.XM0208.XM0208A01DTO">
+        <result column="taskId" property="taskId" />
+        <result column="projectId" property="projectId" />
+        <result column="projectName" property="projectName" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="createdAt" property="createdAt" />
+        <result column="beginAt" property="beginAt" />
+        <result column="finishAt" property="finishAt" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <resultMap id="AreaSearchTask" type="org.ec.xm.dto.XM0208.XM0208A04DTO">
+        <result column="taskId" property="taskId" />
+        <result column="projectId" property="projectId" />
+        <result column="projectName" property="projectName" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="createdAt" property="createdAt" />
+        <result column="beginAt" property="beginAt" />
+        <result column="finishAt" property="finishAt" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <resultMap id="AreaProjectTask" type="org.ec.xm.dto.XM0208.XM0208A08DTO">
+        <result column="taskId" property="taskId" />
+        <result column="projectId" property="projectId" />
+        <result column="projectName" property="projectName" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="createdAt" property="createdAt" />
+        <result column="beginAt" property="beginAt" />
+        <result column="finishAt" property="finishAt" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <resultMap id="AreaYearTask" type="org.ec.xm.dto.XM0208.XM0208A09DTO">
+        <result column="taskId" property="taskId" />
+        <result column="projectId" property="projectId" />
+        <result column="projectName" property="projectName" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="createdAt" property="createdAt" />
+        <result column="beginAt" property="beginAt" />
+        <result column="finishAt" property="finishAt" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <resultMap id="AreaReturnTasks" type="org.ec.xm.dto.XM0208.XM0208A10DTO">
+        <result column="taskId" property="taskId" />
+        <result column="projectId" property="projectId" />
+        <result column="projectName" property="projectName" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="createdAt" property="createdAt" />
+        <result column="beginAt" property="beginAt" />
+        <result column="finishAt" property="finishAt" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <resultMap id="AreaUrgedTasks" type="org.ec.xm.dto.XM0208.XM0208A10DTO">
+        <result column="taskId" property="taskId" />
+        <result column="projectId" property="projectId" />
+        <result column="projectName" property="projectName" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="createdAt" property="createdAt" />
+        <result column="beginAt" property="beginAt" />
+        <result column="finishAt" property="finishAt" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <resultMap id="AreaSelectTree" type="org.ec.xm.dto.XM0208.XM0208A07DTO">
+        <id column="id" ></id>
+        <result column="year" property="year" />
+        <collection property="children" select="getAreaSelectTreeChildren" column="{organization_id=id,year=year}">
+        </collection>
+    </resultMap>
+
+    <resultMap id="AreaLowOrganization" type="org.ec.xm.dto.XM0208.XM0208A03DTO">
+        <result column="id" property="organizationId" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="leader" property="leader" />
+    </resultMap>
+
+    <resultMap id="AreaSuperiorFile" type="org.ec.xm.dto.XM0208.XM0208A05DTO">
+        <result column="source" property="source"  />
+        <result column="name" property="name" />
+        <result column="path" property="path" />
+    </resultMap>
+
+    <resultMap id="AreaFile" type="org.ec.xm.dto.XM0208.XM0208A06DTO">
+        <result column="name" property="name" />
+        <result column="path" property="path" />
+    </resultMap>
+
+    <!--区县SQL查询-->
+    <select id="getAllAreaTask" parameterType="java.lang.Integer" resultMap="AllAreaTask">
+        select distinct xm_task.id taskId, xm_task.project_id projectId, xm_project.`name` projectName, xm_task.name name, xm_task.type type, xm_task.begin_at beginAt, xm_task.created_at createdAt, xm_task.finish_at finishAt, xm_task.`status` status
+        from xm_task, xm_project
+        where xm_task.project_id = xm_project.id and
+        xm_task.organization_id = #{arg0} AND
+        xm_task.enable = 1
+        order by xm_task.created_at desc
+    </select>
+
+    <select id="getAreaSearchTask" resultMap="AreaSearchTask">
+        select distinct xm_task.id taskId, xm_task.project_id projectId, xm_project.`name` projectName, xm_task.name name, xm_task.type type, xm_task.begin_at beginAt, xm_task.created_at createdAt, xm_task.finish_at finishAt, xm_task.`status` status
+        from xm_task, xm_project
+        where xm_task.project_id = xm_project.id and
+        xm_task.organization_id = #{arg0} and
+        xm_task.enable = 1 and
+        (xm_task.name like #{arg1} or
+         xm_project.name like #{arg1})
+        order by xm_task.created_at desc
+    </select>
+
+    <select id="getAreaProjectTask" resultMap="AreaProjectTask">
+        select distinct xm_task.id taskId, xm_task.project_id projectId, xm_project.`name` projectName, xm_task.name name, xm_task.type type, xm_task.begin_at beginAt, xm_task.created_at createdAt, xm_task.finish_at finishAt, xm_task.`status` status
+        from xm_task, xm_project
+        where xm_task.project_id = xm_project.id and
+        xm_task.organization_id = #{arg0} and
+        xm_project.id = #{arg1} and
+        xm_task.enable = 1
+        order by xm_task.created_at desc
+    </select>
+
+    <select id="getAreaYearTask" resultMap="AreaYearTask">
+        select distinct xm_task.id taskId, xm_task.project_id projectId, xm_project.`name` projectName, xm_task.name name, xm_task.type type, xm_task.begin_at beginAt, xm_task.created_at createdAt, xm_task.finish_at finishAt, xm_task.`status` status
+        from xm_task, xm_project
+        where xm_task.project_id = xm_project.id and
+        xm_task.organization_id = #{arg0} and
+        xm_project.year = #{arg1} and
+        xm_task.enable = 1
+        order by xm_task.created_at desc
+    </select>
+
+    <select id="getAreaReturnTasks" resultMap="AreaReturnTasks">
+        select distinct xm_task.id taskId, xm_task.project_id projectId, xm_project.`name` projectName, xm_task.name name, xm_task.type type, xm_task.begin_at beginAt, xm_task.created_at createdAt, xm_task.finish_at finishAt, xm_task.`status` status, xm_task.returned_at
+        from xm_task, xm_project
+        where xm_task.project_id = xm_project.id and
+        xm_task.organization_id = #{arg0} and
+        xm_task.returnman_id is not null and
+        xm_task.enable = 1
+        order by xm_task.returned_at desc
+    </select>
+
+    <select id="getAreaUrgedTasks" resultMap="AreaUrgedTasks">
+        select distinct xm_task.id taskId, xm_task.project_id projectId, xm_project.`name` projectName, xm_task.name name, xm_task.type type, xm_task.begin_at beginAt, xm_task.created_at createdAt, xm_task.finish_at finishAt, xm_task.`status` status, xm_task.urged_at
+        from xm_task, xm_project
+        where xm_task.project_id = xm_project.id and
+        xm_task.organization_id = #{arg0} and
+        xm_task.urgeman_id is not null and
+        xm_task.enable = 1
+        order by xm_task.urged_at desc
+    </select>
+
+    <select id="getAreaSelectTree"  resultMap="AreaSelectTree">
+        select DISTINCT xm_project.year year, xm_task.organization_id id
+        from xm_project, xm_task
+        where xm_task.organization_id=#{arg0} and
+        xm_task.project_id = xm_project.id and
+        xm_task.enable = 1
+    </select>
+
+    <select id="getAreaSelectTreeChildren" resultType="org.ec.xm.dto.XM0208.XM0208A07S01DTO">
+        select distinct xm_project.id as projectId, xm_project.name
+        from xm_project, xm_task
+        where xm_project.year=#{year} and
+        xm_task.organization_id=#{organization_id} and
+        xm_task.project_id = xm_project.id and
+        xm_task.enable = 1
+    </select>
+
+    <select id="getAreaLowOrganization"  resultMap="AreaLowOrganization">
+        select distinct ge_organization.id id, code, ge_organization.name name, GROUP_CONCAT(DISTINCT(ge_user.name)) leader
+        from ge_organization LEFT JOIN ge_organization_manager on ge_organization.id = ge_organization_manager.organization_id
+							 LEFT JOIN ge_user on ge_user.id = ge_organization_manager.user_id
+        where ge_organization.parent_id = #{arg1}
+        and ge_organization.org_type = 5
+        and ge_organization.id not in (select distinct ge_organization.id
+        from ge_organization, xm_task, ge_user, ge_organization_manager
+        where   xm_task.organization_id = ge_organization.id
+        and xm_task.superior_task_id = #{arg0}
+        and ge_organization.parent_id = #{arg1}
+        and ge_organization.org_type = 5
+        and ge_organization_manager.organization_id = ge_organization.id
+        and ge_user.id = ge_organization_manager.user_id)
+        GROUP BY ge_organization.id
+    </select>
+
+    <select id="getAreaSuperiorFile" resultMap="AreaSuperiorFile">
+        select source, name, path
+        from xm_project_file
+        where task_id = #{arg0} and organization_id = #{arg1} and status = 1
+    </select>
+
+    <select id="getAreaFundingFile" resultMap="AreaSuperiorFile">
+        select xm_project_file.source source, xm_project_file.name name, xm_project_file.path path
+        from xm_project_file, xm_funding, xm_task
+        where xm_task.id = #{arg0} and
+        xm_task.superior_organization_id = xm_project_file.organization_id and
+        xm_task.project_id = xm_funding.project_id and
+        xm_project_file.funding_id = xm_funding.id and
+        xm_task.superior_organization_id = xm_funding.organization_id
+    </select>
+
+    <select id="getAreaFile" resultMap="AreaFile">
+        select name, path
+        from xm_project_file
+        where task_id = #{arg0} and organization_id = #{arg1}
+    </select>
+
+    <!--学校返回类型-->
+    <resultMap id="AllSchoolTask" type="org.ec.xm.dto.XM0206.XM0206A01DTO">
+        <result column="taskId" property="taskId" />
+        <result column="projectId" property="projectId" />
+        <result column="projectName" property="projectName" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="createdAt" property="createdAt" />
+        <result column="beginAt" property="beginAt" />
+        <result column="finishAt" property="finishAt" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <resultMap id="SchoolSearchTask" type="org.ec.xm.dto.XM0206.XM0206A02DTO">
+        <result column="taskId" property="taskId" />
+        <result column="projectId" property="projectId" />
+        <result column="projectName" property="projectName" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="createdAt" property="createdAt" />
+        <result column="beginAt" property="beginAt" />
+        <result column="finishAt" property="finishAt" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <resultMap id="SchoolProjectTask" type="org.ec.xm.dto.XM0206.XM0206A06DTO">
+        <result column="taskId" property="taskId" />
+        <result column="projectId" property="projectId" />
+        <result column="projectName" property="projectName" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="createdAt" property="createdAt" />
+        <result column="beginAt" property="beginAt" />
+        <result column="finishAt" property="finishAt" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <resultMap id="SchoolYearTask" type="org.ec.xm.dto.XM0206.XM0206A07DTO">
+        <result column="taskId" property="taskId" />
+        <result column="projectId" property="projectId" />
+        <result column="projectName" property="projectName" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="createdAt" property="createdAt" />
+        <result column="beginAt" property="beginAt" />
+        <result column="finishAt" property="finishAt" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <resultMap id="SchoolReturnTasks" type="org.ec.xm.dto.XM0206.XM0206A08DTO">
+        <result column="taskId" property="taskId" />
+        <result column="projectId" property="projectId" />
+        <result column="projectName" property="projectName" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="createdAt" property="createdAt" />
+        <result column="beginAt" property="beginAt" />
+        <result column="finishAt" property="finishAt" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <resultMap id="SchoolUrgedTasks" type="org.ec.xm.dto.XM0206.XM0206A08DTO">
+        <result column="taskId" property="taskId" />
+        <result column="projectId" property="projectId" />
+        <result column="projectName" property="projectName" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="createdAt" property="createdAt" />
+        <result column="beginAt" property="beginAt" />
+        <result column="finishAt" property="finishAt" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <resultMap id="SchoolSelectTree" type="org.ec.xm.dto.XM0206.XM0206A05DTO">
+        <id column="id" ></id>
+        <result column="year" property="year" />
+        <collection property="children" select="getAreaSelectTreeChildren" column="{organization_id=id,year=year}">
+        </collection>
+    </resultMap>
+
+    <resultMap id="SchoolSuperiorFile" type="org.ec.xm.dto.XM0206.XM0206A04DTO">
+        <result column="source" property="source"  />
+        <result column="name" property="name" />
+        <result column="path" property="path" />
+    </resultMap>
+
+    <resultMap id="SchoolSuperiorFile11" type="org.ec.xm.dto.XM0206.XM0206A04DTO">
+        <result column="source" property="source"  />
+        <result column="name" property="name" />
+        <result column="path" property="path" />
+    </resultMap>
+
+    <resultMap id="SchoolFile" type="org.ec.xm.dto.XM0206.XM0206A03DTO">
+        <result column="name" property="name" />
+        <result column="path" property="path" />
+    </resultMap>
+
+    <!--学校SQL查询-->
+    <select id="getAllSchoolTask" parameterType="java.lang.Integer" resultMap="AllSchoolTask">
+        select distinct xm_task.id taskId, xm_task.project_id projectId, xm_project.`name` projectName, xm_task.name name, xm_task.type type, xm_task.begin_at beginAt, xm_task.created_at createdAt, xm_task.finish_at finishAt, xm_task.`status` status
+        from xm_task, xm_project
+        where xm_task.project_id = xm_project.id and
+        xm_task.organization_id = #{arg0} and
+        xm_task.enable = 1
+        order by xm_task.created_at desc
+    </select>
+
+    <select id="getSchoolSearchTask" resultMap="SchoolSearchTask">
+        select distinct xm_task.id taskId, xm_task.project_id projectId, xm_project.`name` projectName, xm_task.name name, xm_task.type type, xm_task.begin_at beginAt
+        , xm_task.created_at createdAt, xm_task.finish_at finishAt, xm_task.`status` status
+        from xm_task, xm_project, xm_funding_detail
+        where xm_task.project_id = xm_project.id and
+        xm_task.organization_id = #{arg0} and
+        xm_task.enable = 1 and
+        (xm_task.name like #{arg1} or
+         xm_project.name like #{arg1})
+        order by xm_task.created_at desc
+    </select>
+
+    <select id="getSchoolProjectTask" resultMap="SchoolProjectTask">
+        select distinct xm_task.id taskId, xm_task.project_id projectId, xm_project.`name` projectName, xm_task.name name, xm_task.type type, xm_task.begin_at beginAt, xm_task.created_at createdAt, xm_task.finish_at finishAt, xm_task.`status` status
+        from xm_task, xm_project, xm_funding_detail
+        where xm_task.project_id = xm_project.id and
+        xm_task.organization_id = #{arg0} and
+        xm_project.id = #{arg1} and
+        xm_task.enable = 1
+        order by xm_task.created_at desc
+    </select>
+
+    <select id="getSchoolYearTask" resultMap="SchoolYearTask">
+        select distinct xm_task.id taskId, xm_task.project_id projectId, xm_project.`name` projectName, xm_task.name name, xm_task.type type, xm_task.begin_at beginAt, xm_task.created_at createdAt, xm_task.finish_at finishAt, xm_task.`status` status
+        from xm_task, xm_project, xm_funding_detail
+        where xm_task.project_id = xm_project.id and
+        xm_task.organization_id = #{arg0} and
+        xm_project.year = #{arg1} and
+        xm_task.enable = 1
+        order by xm_task.created_at desc
+    </select>
+
+    <select id="getSchoolReturnTasks" resultMap="SchoolReturnTasks">
+        select distinct xm_task.id taskId, xm_task.project_id projectId, xm_project.`name` projectName, xm_task.name name, xm_task.type type, xm_task.begin_at beginAt, xm_task.created_at createdAt, xm_task.finish_at finishAt, xm_task.`status` status, xm_task.returned_at
+        from xm_task, xm_project, xm_funding_detail
+        where xm_task.project_id = xm_project.id and
+        xm_task.organization_id = #{arg0} and
+        xm_task.returnman_id is not null and
+        xm_task.enable = 1
+        order by xm_task.returned_at desc
+    </select>
+
+    <select id="getSchoolUrgedTasks" resultMap="SchoolUrgedTasks">
+        select distinct xm_task.id taskId, xm_task.project_id projectId, xm_project.`name` projectName, xm_task.name name, xm_task.type type, xm_task.begin_at beginAt, xm_task.created_at createdAt, xm_task.finish_at finishAt, xm_task.`status` status, xm_task.urged_at
+        from xm_task, xm_project, xm_funding_detail
+        where xm_task.project_id = xm_project.id and
+        xm_task.organization_id = #{arg0} and
+        xm_task.urgeman_id is not null and
+        xm_task.enable = 1
+        order by xm_task.urged_at desc
+    </select>
+
+    <select id="getSchoolSelectTree"  resultMap="SchoolSelectTree">
+        select DISTINCT xm_project.year year, xm_task.organization_id id
+        from xm_project, xm_task
+        where xm_task.organization_id=#{arg0} and
+        xm_task.project_id = xm_project.id and
+        xm_task.enable = 1
+    </select>
+
+    <select id="getSchoolSelectTreeChildren" resultType="org.ec.xm.dto.XM0206.XM0206A05S01DTO">
+        select distinct xm_project.id as projectId, xm_project.name
+        from xm_project, xm_task
+        where xm_project.year=#{year} and
+        xm_task.organization_id=#{organization_id} and
+        xm_task.project_id = xm_project.id and
+        xm_task.enable = 1
+    </select>
+
+    <select id="getSchoolSuperiorFile" resultMap="SchoolSuperiorFile11">
+        select name, source, path
+        from xm_project_file
+        where task_id = #{arg0} and organization_id = #{arg1} and status = 1
+    </select>
+
+    <select id="getSchoolFundingFile" resultMap="SchoolSuperiorFile">
+        select xm_project_file.source source, xm_project_file.name name, xm_project_file.path path
+                from xm_project_file, xm_funding, xm_task
+                where xm_task.id = #{arg0} and
+                xm_task.superior_organization_id = xm_project_file.organization_id and
+                xm_task.project_id = xm_funding.project_id and
+                xm_project_file.funding_id = xm_funding.id and
+                xm_task.superior_organization_id = xm_funding.organization_id
+    </select>
+
+    <select id="getSchoolFile" resultMap="SchoolFile">
+        select name, path
+        from xm_project_file
+        where task_id = #{arg0} and organization_id = #{arg1}
+    </select>
+
+    <!--公用返回类型-->
+    <resultMap id="LowOrganization" type="org.ec.xm.dto.XM0208.XM0208A03DTO">
+        <result column="id" property="organizationId" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+    </resultMap>
+
+    <!--公用SQL-->
+    <insert id="distribTask">
+    insert into xm_task
+       (project_id, name, type, begin_at, finish_at, enable, remark, status, data_template_id,
+        superior_organization_id, superior_task_id, organization_id, task_mode)
+        values (#{arg0},#{arg1},#{arg2},#{arg3},#{arg4},#{arg5},#{arg6},#{arg7},#{arg8},#{arg9},#{arg10},#{arg11},'临时任务')
+
+  </insert>
+
+
+    <select id="getSuperiorTaskId" resultType="java.lang.Integer">
+        select superior_task_id
+        from xm_task
+        where id = #{arg0}
+    </select>
+
+    <select id="getProjectMoney" resultType="java.lang.Double">
+      select sum(money)
+      from xm_money_source
+      where project_id = #{arg0} and organization_id = #{arg1}
+      group by project_id
+    </select>
+
+    <select id="getTaskMoney" resultType="java.lang.Double">
+      select sum(money)
+      from xm_funding_detail
+      where project_id = #{arg0} and organization_id = #{arg1}
+    </select>
+
+
+
+
+
+    <resultMap id="XXBaseResultMap" type="org.ec.xm.dto.XM0203.XM0203A01DTO">
+            <id column="id" property="taskId"></id>
+            <result column="name" property="name"></result>
+            <result column="created_at" property="createdAt"></result>
+            <result column="begin_at" property="beginAt"></result>
+            <result column="finish_at" property="finishAt"></result>
+            <result column="status" property="status"></result>
+        </resultMap>
+
+    <resultMap id="XXBaseResultMap1" type="java.lang.Integer">
+         <result column="id"></result>
+    </resultMap>
+    <delete id="deleteFromTask">
+        DELETE  from xm_task where project_id=#{id,jdbcType=INTEGER}
+    </delete>
+
+    <select id="getTaskListXX" parameterType="org.ec.xm.dto.XM0203.XM0203A01InputDTO" resultMap="XXBaseResultMap">
+  select id,name,created_at,begin_at,finish_at,status from xm_task where project_id=#{projectId,jdbcType=INTEGER} and superior_task_id IS NULL
+  <if test="status!='全部'">
+    AND  status=#{status,jdbcType=VARCHAR}
+  </if>
+    </select>
+    <select id="getAllTaskId" parameterType="java.lang.Integer" resultMap="XXBaseResultMap1">
+SELECT distinct id from xm_task where project_id=#{id,jdbcType=INTEGER}
+</select>
+  <update id="updateByPrimaryKey" parameterType="org.ec.xm.entity.XmTask">
+    update xm_task
+    set project_id = #{projectId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      begin_at = #{beginAt,jdbcType=TIMESTAMP},
+      finish_at = #{finishAt,jdbcType=TIMESTAMP},
+      enable = #{enable,jdbcType=BIT},
+      project_config_id = #{projectConfigId,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
+      data_template_id = #{dataTemplateId,jdbcType=INTEGER},
+      created_organization_id = #{createdOrganizationId,jdbcType=INTEGER},
+      superior_organization_id = #{superiorOrganizationId,jdbcType=INTEGER},
+      organization_id = #{organizationId,jdbcType=INTEGER},
+      returnman_id = #{returnmanId,jdbcType=INTEGER},
+      returned_at = #{returnedAt,jdbcType=TIMESTAMP},
+      urgeman_id = #{urgemanId,jdbcType=INTEGER},
+      urged_at = #{urgedAt,jdbcType=TIMESTAMP},
+      task_mode = #{taskMode,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=LONGVARCHAR},
+      superior_task_id = #{superiorTaskId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, project_id, name, type, begin_at, finish_at, enable, project_config_id, 
+    status, data_template_id, created_organization_id, superior_organization_id, organization_id,
+    returnman_id, returned_at, urgeman_id, urged_at, task_mode, created_at, updated_at,
+    remark, superior_task_id
+    from xm_task
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, project_id, name, type, begin_at, finish_at, enable, project_config_id, 
+    status, data_template_id, created_organization_id, superior_organization_id, organization_id, 
+    returnman_id, returned_at, urgeman_id, urged_at, task_mode, created_at, updated_at, 
+    remark, superior_task_id
+    from xm_task
+  </select>
+  <select id="selectSchoolTaskByMap" parameterType="Map" resultType="Map">
+ SELECT
+    xm_task.id,
+    xm_task.project_id,
+    xm_task.`name`,
+    xm_task.type,
+    xm_task.begin_at,
+    xm_task.finish_at,
+    xm_task.`enable`,
+    xm_task.remark,
+    xm_task.project_config_id,
+    xm_task.`status`,
+    xm_task.data_template_id,
+    xm_task.created_organization_id,
+    xm_task.superior_organization_id,
+    xm_task.organization_id,
+    xm_task.returnman_id,
+    xm_task.returned_at,
+    xm_task.urgeman_id,
+    xm_task.urged_at,
+    xm_task.task_mode,
+    xm_task.created_at
+    FROM
+    xm_task
+    where xm_task.superior_task_id in ((select xm_task.id from xm_task where xm_task.superior_task_id=#{superior_task_id,jdbcType=INTEGER}))
+      <if test="status != '全部'">and  xm_task.`status`= #{status,jdbcType=VARCHAR}</if>
+    limit #{page,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+    <select id="selectOrganizationTaskByMap" parameterType="Map" resultType="Map">
+        SELECT
+        xm_task.id,
+        xm_task.project_id,
+        xm_task.`name`,
+        xm_task.type,
+        xm_task.begin_at,
+        xm_task.finish_at,
+        xm_task.`enable`,
+        xm_task.remark,
+        xm_task.project_config_id,
+        xm_task.`status`,
+        xm_task.data_template_id,
+        xm_task.created_organization_id,
+        xm_task.superior_organization_id,
+        xm_task.organization_id,
+        xm_task.returnman_id,
+        xm_task.returned_at,
+        xm_task.urgeman_id,
+        xm_task.urged_at,
+        xm_task.task_mode,
+        xm_task.created_at
+        FROM
+        xm_task
+        where xm_task.superior_task_id = #{superior_task_id,jdbcType=INTEGER}
+        <if test="status != '全部' and status != '超时'">and  xm_task.`status`= #{status,jdbcType=VARCHAR}</if>
+        <if test="status == '超时'">and NOW() > xm_task.finish_at </if>
+        limit #{page,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </select>
+
+  <select id="getAllCounts"  parameterType="Map" resultType="java.lang.Integer">
+    SELECT
+    count(1)
+    FROM
+    xm_task
+    WHERE xm_task.superior_task_id=#{superior_task_id,jdbcType=INTEGER}
+      <if test="status != '全部' and status != '超时'">and  xm_task.`status`= #{status,jdbcType=VARCHAR}</if>
+      <if test="status == '超时'">and NOW() > xm_task.finish_at </if>
+  </select>
+    <select id="selectsubTasktByTaskId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select id, project_id, name, type, begin_at, finish_at, enable, project_config_id,
+        status, data_template_id, created_organization_id, superior_organization_id, organization_id,
+        returnman_id, returned_at, urgeman_id, urged_at, task_mode, created_at, updated_at, superior_task_id,
+        remark
+        from xm_task
+        where id = #{task_id,jdbcType=INTEGER}
+    </select>
+
+    <select id="getName" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select name
+    from xm_project
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+    <select id="getUpOrganizationId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select superior_organization_id
+        from xm_task
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <update id="updateReturn" parameterType="org.ec.xm.entity.XmTask">
+        update xm_task
+        set
+        returnman_id = #{returnmanId,jdbcType=INTEGER},
+        returned_at = #{returnedAt,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateReturnStatus" parameterType="org.ec.xm.entity.XmTask">
+        update xm_task
+        set
+        status = '执行中'
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="distinctsAllNum"   resultType="java.lang.Integer">
+SELECT
+	count(1)
+FROM
+	xm_task
+WHERE
+	xm_task.superior_task_id = (
+		SELECT
+			xm_task.superior_task_id
+		FROM
+			xm_task
+		WHERE
+			xm_task.id =  #{arg0}
+	)
+    </select>
+
+    <select id="distinctsAllFinishNum"   resultType="java.lang.Integer">
+    SELECT
+	count(1)
+FROM
+	xm_task
+WHERE
+	xm_task.superior_task_id = (
+		SELECT
+			xm_task.superior_task_id
+		FROM
+			xm_task
+		WHERE
+			xm_task.id = #{arg0}
+	) and xm_task.`status`='执行完成'
+    </select>
+
+    <update id="updateUrge" parameterType="org.ec.xm.entity.XmTask">
+        update xm_task
+        set
+        urgeman_id = #{urgemanId,jdbcType=INTEGER},
+        urged_at = #{urgedAt,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="getOrganizationName" resultType="java.lang.String">
+        select name
+        from ge_organization
+        where id = #{arg0}
+    </select>
+
+    <select id="getUserName" resultType="java.lang.String">
+        select name
+        from ge_user
+        where id = #{arg0}
+    </select>
+
+
+
+
+    <select id="getTaskId" resultType="java.lang.Integer">
+        select id
+        from xm_task
+        where superior_task_id = #{arg0}
+    </select>
+
+    <resultMap id="BaseResultMap6" type="java.lang.Integer">
+    </resultMap>
+    <select id="getAllOrganizationId"  parameterType="java.lang.Integer"  resultMap="BaseResultMap6">
+        select id from ge_organization where parent_id = 1
+    </select>
+</mapper>
+

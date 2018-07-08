@@ -1,0 +1,45 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "gradle.plugin.com.arenagod.gradle:mybatis-generator-plugin:1.4"
+    }
+}
+
+
+group 'org.ec '
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: "com.arenagod.gradle.MybatisGenerator"
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+
+
+ext {
+    springBootVersion = SPRING_BOOT_VERSION
+}
+
+dependencies {
+    compile project(":ec-xm:xm-entity")
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile(MYBATIS_STATER)
+    compile('org.springframework.boot:spring-boot-starter-jdbc')
+    compile('org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}')
+    runtime MYSQL_COMMECTOR
+    compile DRUID
+}
+
+configurations {
+    mybatisGenerator
+}
+
+mybatisGenerator {
+    verbose = true
+    configFile = 'src/main/resources/org/ec/xm/dao/generatorConfig.xml'
+}

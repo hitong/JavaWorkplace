@@ -1,0 +1,25 @@
+spring:
+  cloud:
+    consul:
+      host: ${CONSUL_HOST}
+      port: ${CONSUL_PORT:8500}
+      enabled: ${CONSUL_ENABLE:false}
+      config:
+        watch:
+          delay: 1000
+          enabled: ${CONSUL_ENABLE:false}
+        enabled: ${CONSUL_ENABLE:false}   #默认是true --
+        defaultContext: application
+        format: YAML    # 表示consul上面文件的格式 有四种 YAML PROPERTIES KEY-VALUE FILES
+        data-key: data    #表示consul上面的KEY值(或者说文件的名字) 默认是data
+
+      discovery:
+        enabled: ${CONSUL_ENABLE:false}
+        serviceName: ec-xm
+        hostname: ${HOST}
+        port: ${OUT_PORT:${server.port}}
+        healthCheckInterval: 10s
+        register-health-check: ${HEALTH_CHECK:false}
+
+  application:
+    name: ec-xm

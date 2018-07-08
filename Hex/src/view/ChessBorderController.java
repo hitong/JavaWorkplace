@@ -192,14 +192,15 @@ public class ChessBorderController {
 	public void move() {
 		Platform.runLater(() -> {
 			main.move(BasicVariables.ROBOTMOVE.x + " " + BasicVariables.ROBOTMOVE.y);
-			Polygon p = (Polygon) mainPane.getChildren().get(BasicVariables.ROBOTMOVE.y + BasicVariables.ROBOTMOVE.x * 11);
+			Polygon p = (Polygon) mainPane.getChildren()
+					.get(BasicVariables.ROBOTMOVE.y + BasicVariables.ROBOTMOVE.x * 11);
 			p.setFill(BasicVariables.SPACE_COLOR);
 			if (BasicVariables.HISTORY.size() % 2 == 1) {
 				p.setFill(BasicVariables.FIRST_COLOR);
 			} else {
 				p.setFill(BasicVariables.SECOND_COLOR);
 			}
-			
+
 			if (main.checkWin()) {
 				setDisable(true);
 			} else {
@@ -209,51 +210,23 @@ public class ChessBorderController {
 		});
 	}
 
-	private Thread first = new Thread(new Task<Void>() {
-		@Override
-		protected Void call() throws Exception {
-			while (true) {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+	private Thread time = new Thread(() -> {
+		while (true) {
+			try {
+				Thread.sleep(1000);
+				if (BasicVariables.HISTORY.size() % 2 == 1) {
+					firstTime.setText(ShowTime.setTime(firstTime.getText()));
+				} else {
+					secondTime.setText(ShowTime.setTime(secondTime.getText()));
 				}
-				firstTime.setText(ShowTime.setTime(firstTime.getText()));
+			} catch (InterruptedException e) {
 			}
 		}
 	});
 
-	private Thread second = new Thread(new Task<Void>() {
-		protected Void call() throws Exception {
-			while (true) {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				secondTime.setText(ShowTime.setTime(secondTime.getText()));
-			}
-		}
-	});
-
-	private synchronized void showTime() {
-		try {
-			if (!first.isAlive() && !second.isAlive()) {
-				first.start();
-				second.start();
-
-				first.wait();
-
-			} else if (BasicVariables.HISTORY.size() % 2 == 1) {
-				first.wait();
-				second.notify();
-			} else {
-				first.notify();
-				second.wait();
-			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	private void showTime() {
+		if (!time.isAlive()) {
+			time.start();
 		}
 	}
 
@@ -278,15 +251,13 @@ public class ChessBorderController {
 	private void restart() {
 		try {
 			if (BasicVariables.HISTORY.size() != 0) {
-				this.first.wait();
-				this.second.wait();
+				this.time.interrupt();
 				this.firstTime.setText(ShowTime.initTime());
 				this.secondTime.setText(ShowTime.initTime());
 			}
 			clean();
 			main.reStart(firstTime);
 		} catch (Exception ex) {
-
 		}
 	}
 
@@ -320,11 +291,9 @@ public class ChessBorderController {
 	}
 
 	public void stopAllTime() {
-		try{
-			first.wait();
-			second.wait();
-		} catch (Exception ex){
-			
+		try {
+			time.wait();
+		} catch (Exception ex) {
 		}
 	}
 
@@ -410,7 +379,7 @@ public class ChessBorderController {
 		this.restart();
 		this.result.setText("0:0");
 	}
-
+	
 	public void exit() {
 		System.exit(0);
 	}

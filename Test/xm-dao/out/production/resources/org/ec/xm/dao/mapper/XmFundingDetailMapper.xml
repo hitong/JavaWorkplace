@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ec.xm.dao.mapper.XmFundingDetailMapper">
+  <resultMap id="BaseResultMap" type="org.ec.xm.entity.XmFundingDetail">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="funding_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="organization_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="money" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="project_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="created_at" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="updated_at" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+    <resultMap id="BaseResultMap1" type="org.ec.xm.dto.XM0203.XM0203A06DTO">
+        <result column="CODE" property="code"></result>
+        <result column="NAME" property="name"></result>
+        <result column="source" property="source"></result>
+        <result column="created_at" property="createdAt"></result>
+        <result column="YEAR" property="year"></result>
+        <result column="education_stage" property="educationStage"></result>
+        <result column="fundingId" property="fundingId"></result>
+        <result column="money" property="money"></result>
+    </resultMap>
+    <resultMap id="BaseResultMap2" type="org.ec.xm.dto.XM0210.XM0210A16DTO">
+        <result column="id" property="projectId"></result>
+        <result column="name" property="name"></result>
+    </resultMap>
+    <resultMap id="BaseResultMap3" type="org.ec.xm.dto.XM0203.XM0203A16DTO"></resultMap>
+    <resultMap id="BaseResultMap4" type="org.ec.xm.dto.XM0210.XM0210A13DTO">
+        <result column="organizationID"></result>
+        <result column="year" property="year"></result>
+        <collection property="children" select="getChildren1" column="{year=year,organizationID=organizationID}">
+
+        </collection>
+    </resultMap>
+    <resultMap id="BaseResultMap5" type="java.lang.Integer">
+    </resultMap>
+    <select id="selectAllIdByFundingId" parameterType="java.lang.Integer" resultMap="BaseResultMap5">
+        select organization_id from xm_funding_detail where funding_id=#{id}
+    </select>
+    <delete id="deleteFundingDetatilById">
+        delete from  xm_funding_detail where funding_id=#{arg0} and organization_id=#{arg1}
+    </delete>
+    <select id="getTotalMoneyByFundingId" resultType="java.lang.Object">
+         SELECT  SUM(money) from xm_funding_detail where funding_id=#{id}
+    </select>
+    <select id="getAllYearsByOrganization" resultMap="BaseResultMap4">
+        SELECT DISTINCT
+	YEAR,#{id} as organizationID
+FROM
+	(
+		SELECT
+			id,
+			CODE,
+			NAME,
+			source,
+			YEAR,
+			education_stage,
+			remark,
+			STATUS,
+			organization_id,
+			creator_id
+		FROM
+			xm_project
+		WHERE
+			id IN (
+				SELECT DISTINCT
+					project_id
+				FROM
+					xm_funding_detail
+				WHERE
+					funding_id in (SELECT id from xm_funding
+            where  organization_id=#{id}
+)
+			)
+		AND STATUS = TRUE
+		AND YEAR != ''
+		ORDER BY
+			YEAR DESC
+	) AS a
+ORDER BY
+	YEAR DESC
+    </select>
+
+    <select id="getChildren1" resultType="org.ec.xm.dto.XM0210.XM0210A13S01DTO">
+    SELECT
+        CODE,
+        NAME
+        FROM
+        (
+        SELECT
+        CODE,
+        NAME,
+        YEAR,
+        STATUS
+        FROM
+        xm_project
+        WHERE
+        id IN (
+        SELECT DISTINCT
+        project_id
+        FROM
+        xm_funding
+        WHERE
+        organization_id =#{organizationID}
+        )
+        AND STATUS = TRUE
+        AND YEAR != ''
+        ORDER BY
+        YEAR DESC
+        ) AS a
+        WHERE
+        YEAR = #{year}
+        AND STATUS = TRUE
+        order by NAME
+    </select>
+    <select id="getSchoolDeatail" parameterType="org.ec.xm.dto.XM0203.XM0203A16InputDTO" resultMap="BaseResultMap3">
+
+SELECT
+	NAME ,a.money
+FROM
+	ge_organization,
+	(
+		SELECT
+			SUM(money) AS money,
+			organization_id
+		FROM
+			xm_funding_detail
+		WHERE
+			funding_id IN (
+				SELECT
+					id
+				FROM
+					xm_funding
+				WHERE
+					organization_id = #{organizationId,jdbcType=INTEGER}
+				AND project_id = #{projectId,jdbcType=INTEGER}
+			)
+-- 		AND money > 0
+		GROUP BY
+			organization_id
+	) AS a
+WHERE
+	a.organization_id = ge_organization.id
+    </select>
+    <select id="getAllProjects" parameterType="org.ec.xm.dto.XM0210.XM0210A16InputDTO" resultMap="BaseResultMap2">
+select id,
+ NAME
+FROM
+	xm_project
+WHERE
+	id IN (
+		SELECT DISTINCT
+			project_id
+		FROM
+			xm_funding_detail
+		WHERE
+			organization_id = #{organizationId,jdbcType=INTEGER} and money>0
+	) and status=true
+    </select>
+    <update id="changeDownDetail">
+    update xm_funding_detail set money=#{arg2} where funding_id=#{arg0} and organization_id=#{arg1}
+    </update>
+    <select id="getDownList" parameterType="org.ec.xm.dto.XM0203.XM0203A06InputDTO" resultMap="BaseResultMap1">
+SELECT
+	CODE,
+	NAME,
+	source,
+	xm_funding.created_at,
+	YEAR,
+	education_stage,
+	funding_id AS fundingId,
+	money
+FROM
+	xm_project,
+	(
+		SELECT
+			SUM(money) AS money,
+			funding_id
+		FROM
+			xm_funding_detail
+		GROUP BY
+			funding_id
+		HAVING
+			funding_id IN (
+				SELECT
+					id AS fundingId
+				FROM
+					xm_funding
+				WHERE
+					project_id = #{projectId,jdbcType=INTEGER}
+				AND organization_id = #{organizationId,jdbcType=INTEGER}
+		) -- and money>0
+	) AS b,xm_funding
+WHERE
+	xm_project.id = #{projectId,jdbcType=INTEGER}   and xm_funding.project_id=xm_project.id  and xm_funding.id=b.funding_id    order by xm_funding.created_at DESC
+    </select>
+  <delete id="deleteFromFundingDetail" parameterType="java.lang.Integer">
+ DELETE  from xm_funding_detail where  project_id=#{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByPrimaryKey" >
+    delete from xm_funding_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.ec.xm.entity.XmFundingDetail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into xm_funding_detail (funding_id, organization_id, money, 
+      project_id, created_at, updated_at
+      )
+    values (#{fundingId,jdbcType=INTEGER}, #{organizationId,jdbcType=INTEGER}, #{money,jdbcType=DOUBLE}, 
+      #{projectId,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.ec.xm.entity.XmFundingDetail">
+    update xm_funding_detail
+    set funding_id = #{fundingId,jdbcType=INTEGER},
+      organization_id = #{organizationId,jdbcType=INTEGER},
+      money = #{money,jdbcType=DOUBLE},
+      project_id = #{projectId,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, funding_id, organization_id, money, project_id, created_at, updated_at
+    from xm_funding_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, funding_id, organization_id, money, project_id, created_at, updated_at
+    from xm_funding_detail
+  </select>
+</mapper>

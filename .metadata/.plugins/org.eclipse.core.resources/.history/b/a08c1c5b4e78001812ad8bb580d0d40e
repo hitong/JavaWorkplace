@@ -1,9 +1,0 @@
-package viewModel;
-
-import javafx.scene.Parent;
-import javafx.scene.layout.VBox;
-
-public class UserList extends Parent{
-
-	
-}

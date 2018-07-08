@@ -6,4 +6,5 @@ VALUE_BOOLEAN=\#ff007f | null | false
 VALUE_NULL=\#ff007f | null | false
 VALUE_NUMBER=\#c48cff | null | false
 VALUE_STRING=\#ece47e | null | false | true
+catalogEntries=<?xml version\="1.0" encoding\="UTF-8" standalone\="yes"?><entries/>
 eclipse.preferences.version=1

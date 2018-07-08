@@ -1,5 +1,0 @@
-package localPattern;
-
-public class MyChess {
-	int oLocal;//外部坐标
-}

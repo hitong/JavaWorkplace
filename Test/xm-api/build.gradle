@@ -1,0 +1,81 @@
+buildscript {
+    ext {
+        springBootVersion = SPRING_BOOT_VERSION
+    }
+    repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+ext {
+    springCloudVersion = 'Edgware.SR1'
+}
+
+group 'org.ec'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    // 健康检查
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    // springmvc
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.cloud:spring-cloud-starter')
+    // consul 云配置
+    compile('org.springframework.cloud:spring-cloud-starter-consul-config')
+    // consul 服务发现
+    compile('org.springframework.cloud:spring-cloud-starter-consul-discovery')
+    // http客户端
+    compile('org.springframework.cloud:spring-cloud-starter-feign')
+    // 降级处理
+    compile('org.springframework.cloud:spring-cloud-starter-hystrix')
+    compile('org.springframework.cloud:spring-cloud-starter-hystrix-dashboard')
+    // 客户端负载均衡
+    compile('org.springframework.cloud:spring-cloud-starter-ribbon')
+    // 链路追踪
+    compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+    compile('org.springframework.cloud:spring-cloud-starter-zipkin')
+    // API网关
+    compile('org.springframework.cloud:spring-cloud-starter-zuul')
+    runtime('org.springframework.boot:spring-boot-devtools')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    // 日志
+    compile 'net.logstash.logback:logstash-logback-encoder:4.11'
+    compile 'org.springframework.boot:spring-boot-starter-logging'
+
+    // swagger
+    compile SWAGGER_UI
+    compile SWAGGER_CORE
+
+	compile 'com.xuxueli:xxl-job-core:1.9.1'
+
+    compile project(":ec-xm:xm-service")
+    compile project(":ec-xm:xm-service-impl")
+
+
+    compile project(':ec-auth:auth-service')
+    compile project(':ec-auth:auth-service-impl')
+    compile project(':ec-utils')
+    compile project(':ec-global')
+    compile project(":ec-attachment:attachment-service")
+    compile project(":ec-attachment:attachment-service-impl")
+    compile project(':ec-ge:ge-service-impl')
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}

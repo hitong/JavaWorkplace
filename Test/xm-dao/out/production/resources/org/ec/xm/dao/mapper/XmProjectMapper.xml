@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ec.xm.dao.mapper.XmProjectMapper">
+  <resultMap id="BaseResultMap" type="org.ec.xm.entity.XmProject">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="source" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="year" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="education_stage" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="status" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="organization_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="creator_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="created_at" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="updated_at" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="remark" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+    </constructor>
+  </resultMap>
+  <resultMap id="BaseResultMap1" type="org.ec.xm.dto.XM0202.XM0202A01S01DTO">
+    <id column="id" property="id"></id>
+    <result column="code" property="code"></result>
+    <result column="name" property="name"></result>
+    <result column="source" property="source"></result>
+    <result column="year" property="year"></result>
+    <result column="education_stage" property="educationStage"></result>
+    <result column="status" property="status"></result>
+    <result column="created_at" property="createdAt"></result>
+    <result column="remark" property="remark"></result>
+    <collection property="peojectConfig" select="getSubMenu" column="id" >
+      <result column="projectConfigId" property="projectConfigId"></result>
+      <result column="dataTemplateId" property="dataTemplateId"/>
+      <result column="timedTaskType" property="timedTaskType"/>
+        <result column="timingTaskId" property="timingTaskId"></result>
+    </collection>
+  </resultMap>
+  <resultMap id="BaseResultMap2" type="org.ec.xm.dto.XM0202.XM0202A02DTO">
+    <id column="id" ></id>
+    <result column="year" property="year"></result>
+    <collection property="children" select="getChildren" column="{id=id,year=year}">
+
+    </collection>
+  </resultMap>
+  <resultMap id="BaseResultMap3" type="org.ec.xm.dto.XM0202.XM0202A02S01DTO">
+    <constructor>
+      <arg column="code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <resultMap id="BaseResultMap4" type="org.ec.xm.dto.XM0210.XM0210A13DTO">
+    <result column="organizationID"></result>
+    <result column="year" property="year"></result>
+    <collection property="children" select="getChildren1" column="{year=year,organizationID=organizationID}">
+
+    </collection>
+  </resultMap>
+  <resultMap id="BaseResultMap5" type="org.ec.xm.dto.XM0210.XM0210A01S01DTO">
+    <id column="id" property="projectId"></id>
+    <result column="code" property="code"></result>
+    <result column="name" property="name"></result>
+    <result column="source" property="source"></result>
+    <result column="year" property="year"></result>
+    <result column="education_stage" property="educationStage"></result>
+    <result column="created_at" property="createdAt"></result>
+      <result column="funding_id" property="fundingId"></result>
+  </resultMap>
+    <resultMap id="BaseResultMap6" type="java.lang.Integer">
+    </resultMap>
+    <select id="selectAllConfigIdByProjectId"  parameterType="java.lang.Integer"  resultMap="BaseResultMap6">
+       select id from xm_project_config where project_id =#{id}
+    </select>
+    <update id="updateProjectConfigById" parameterType="org.ec.xm.dto.XM0202.XM0202A01S02DTO">
+ update xm_project_config set timed_task_type=#{timedTaskType},data_template_id=#{dataTemplateId} where id=#{projectConfigId}
+    </update>
+  <delete id="deleteFromProject" parameterType="java.lang.Integer">
+DELETE  from xm_project where id=#{id,jdbcType=INTEGER}
+  </delete>
+  <update id="sureProject" parameterType="java.lang.Integer">
+     update xm_project set status=true where id=#{id,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByProjectId" parameterType="java.lang.Integer">
+  DELETE  from xm_project_config where id=#{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="updateConfigById" parameterType="org.ec.xm.dto.XM0202.XM0202A01S02DTO" >
+    INSERT into xm_project_config(timed_task_type,data_template_id,project_id) VALUES(
+    #{timedTaskType,jdbcType=VARCHAR},
+    #{dataTemplateId,jdbcType=INTEGER},#{projectConfigId,jdbcType=INTEGER}
+    );
+  </insert>
+  <update id="updataByProjectId"  parameterType="org.ec.xm.dto.XM0202.XM0202A06InputDTO">
+    update xm_project
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      year = #{year,jdbcType=VARCHAR},
+      education_stage = #{educationStage,jdbcType=VARCHAR},
+      updated_at = CURRENT_TIMESTAMP (),
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where id = #{projectId,jdbcType=INTEGER}
+  </update>
+  <select id="getProjectDetailById" parameterType="java.lang.Integer" resultType="org.ec.xm.dto.XM0203.XM0203A02DTO">
+  select  code, name, source, year, education_stage as educationStage ,remark
+    from xm_project
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getProjectNameByYear" resultMap="BaseResultMap3">
+   SELECT code,name from xm_project where year=#{arg0}
+  </select>
+  <select id="getAllYears"  resultMap="BaseResultMap2">
+   select DISTINCT year,organization_id as id from xm_project where organization_id=#{arg0} and year !='' order by year DESC
+  </select>
+  <select id="getAllYears1"  resultMap="BaseResultMap4">
+SELECT DISTINCT
+	YEAR,#{id} as organizationID
+FROM
+	(
+		SELECT
+			id,
+			CODE,
+			NAME,
+			source,
+			YEAR,
+			education_stage,
+			remark,
+			STATUS,
+			organization_id,
+			creator_id
+		FROM
+			xm_project
+		WHERE
+			id IN (
+				SELECT DISTINCT
+					project_id
+				FROM
+					xm_funding_detail
+				WHERE
+					organization_id = #{id}
+				AND money > 0
+			)
+		AND STATUS = TRUE
+		AND YEAR != ''
+		ORDER BY
+			YEAR DESC
+	) AS a
+ORDER BY
+	YEAR DESC
+  </select>
+<select id="selectAllById" resultMap="BaseResultMap1">
+    select id,code, name, source, year, education_stage, status,
+    created_at,remark
+    from xm_project where organization_id=#{arg1}
+  <if test="param1!=''">
+    and (code like ('%${arg0}%') or name like ('%${arg0}%') or YEAR =#{arg0})
+  </if>
+  order BY  created_at DESC
+</select>
+  <select id="selectAllById1" resultMap="BaseResultMap5">
+
+      SELECT
+      id,
+      CODE,
+      NAME,
+      source,
+      YEAR,
+      education_stage,
+      a.money,
+      a.funding_id,
+      a.created_at
+      FROM
+      xm_project,
+      (
+      SELECT
+      money,project_id,created_at,funding_id
+      FROM
+      xm_funding_detail
+      WHERE
+      organization_id = #{arg1}
+      and money>0
+      ) as a
+      WHERE
+      id IN (
+      SELECT DISTINCT
+      project_id
+      FROM
+      xm_funding_detail
+      WHERE
+      organization_id =  #{arg1}
+      )
+      and id=a.project_id
+      <if test="param1!=''">
+          and (code LIKE ('%${arg0}%') or name like ('%${arg0}%') or YEAR =#{arg0})
+      </if>
+      and status=TRUE  order BY  a.created_at DESC
+  </select>
+  <select id="getSubMenu" resultType="org.ec.xm.dto.XM0202.XM0202A01S02DTO">
+  select id as projectConfigId, timing_task_id as timingTaskId, data_template_id as dataTemplateId,timed_task_type as timedTaskType from xm_project_config where project_id=#{id}
+  </select>
+  <select id="getChildren" resultType="org.ec.xm.dto.XM0202.XM0202A02S01DTO">
+    select code,name from xm_project where year=#{year} and organization_id=#{id} order by NAME
+  </select>
+  <select id="getChildren1" resultType="org.ec.xm.dto.XM0210.XM0210A13S01DTO">
+SELECT
+	CODE,
+	NAME
+FROM
+	(
+		SELECT
+			CODE,
+			created_at,
+			NAME,
+			YEAR,
+			STATUS
+		FROM
+			xm_project
+		WHERE
+			id IN (
+				SELECT DISTINCT
+					project_id
+				FROM
+					xm_funding_detail
+				WHERE
+					organization_id = #{organizationID}
+				AND money > 0
+			)
+		AND STATUS = TRUE
+		AND YEAR != ''
+		ORDER BY
+			YEAR DESC
+	) AS a
+WHERE
+	YEAR = #{year}
+AND STATUS = TRUE
+order by  created_at DESC
+  </select>
+<insert id="addProject" parameterType="org.ec.xm.dto.XM0202.XM0202A03InputDTO" >
+  <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+    SELECT LAST_INSERT_ID();
+  </selectKey>
+insert into xm_project(code,name,source,year,education_stage,remark,status,organization_id,creator_id)
+values(#{code,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{source,jdbcType=VARCHAR},#{year,jdbcType=VARCHAR},
+#{educationStage,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{status,jdbcType=TINYINT},#{organizationId,jdbcType=INTEGER},#{creatorId,jdbcType=INTEGER});
+</insert>
+<insert id="addConfig" >
+  <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+    SELECT LAST_INSERT_ID();
+  </selectKey>
+INSERT into xm_project_config(timed_task_type,data_template_id,project_id,timing_task_id) VALUES(#{arg0},#{arg1},#{arg2},#{arg3});
+</insert>
+  <delete id="deleteByPrimaryKey" >
+    delete from xm_project
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.ec.xm.entity.XmProject">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into xm_project (code, name, source, 
+      year, education_stage, status, 
+      organization_id, creator_id, created_at, 
+      updated_at, remark)
+    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, 
+      #{year,jdbcType=VARCHAR}, #{educationStage,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{organizationId,jdbcType=INTEGER}, #{creatorId,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.ec.xm.entity.XmProject">
+    update xm_project
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      year = #{year,jdbcType=VARCHAR},
+      education_stage = #{educationStage,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      organization_id = #{organizationId,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, code, name, source, year, education_stage, status, organization_id, creator_id, 
+    created_at, updated_at, remark
+    from xm_project
+  </select>
+  <select id="getProjectName" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select xm_project.`name`
+    from xm_project
+    where xm_project.id = #{id, jdbcType=INTEGER}
+  </select>
+</mapper>

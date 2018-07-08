@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+singularity-cli g vue curd -o xm-web/src/view -c gen-entity.yml.erb

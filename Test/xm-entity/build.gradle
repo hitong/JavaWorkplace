@@ -1,0 +1,18 @@
+ext {
+    springBootVersion = SPRING_BOOT_VERSION
+}
+group 'org.ec'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile project(':ec-utils')
+    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+}

@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<server auto-publish-setting="2" auto-publish-time="1" com.genuitec.eclipse.webclipse.livepreview.enabled="true" configuration-id="/Servers/MyEclipse Tomcat v8.5-config" deployDir="wtpwebapps" has-configuration="true" hostname="localhost" id="com.genuitec.embedded.tomcat.server.v85" id-set="true" java-location="D:\MyEclipse\binary\com.sun.java.jdk8.win32.x86_64_1.8.0.v112" name="MyEclipse Tomcat v8.5" runtime-id="com.genuitec.embedded.tomcat.runtime.v85" server-location="D:\MyEclipse\plugins\com.genuitec.eclipse.server.embedded.tomcat.core_13.0.0.me201612211440\tomcat85" server-type="com.genuitec.embedded.tomcat.server.v85" server-type-id="com.genuitec.embedded.tomcat.server.v85" single-instance="true" start-timeout="45" stop-timeout="15" testEnvironment="false" timestamp="13" useAutoDeploy="true">
-  <list key="modules" value0="TestWeb::org.eclipse.jst.jee.server:TestWeb::jst.web::3.1%%EXPLODED"/>
-</server>

@@ -1,0 +1,1 @@
+npm install yarn --global & yarn --cwd ./xm-web install & yarn --cwd ./oa-web start

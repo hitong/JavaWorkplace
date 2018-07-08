@@ -1,0 +1,23 @@
+spring:
+  profiles:
+    active: ${ENV:dev}   # 获取环境变量，让程序去加载特定的 application-{ENV}文件
+  http:
+   multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+  # 默认时区
+  jackson:
+    time-zone: GMT+8
+
+xxl:
+  job:
+    admin:
+      addresses: ${XXL_HOST:false}
+    executor:
+      appname: ec-xm
+      port: ${XXL_PORT:9999}
+      logpath: ${XXL_LOG_PATH:./logs/}
+      ip: ${HOST:}
+      logretentiondays: 30
+    accessToken:

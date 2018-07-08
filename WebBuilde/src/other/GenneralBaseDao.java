@@ -14,6 +14,7 @@ public class GenneralBaseDao <T>{
 	static {
 		ArrayList<Entity> tmpArr = new ArrayList<Entity>();
 		try {
+			System.out.println(XmlReaderFromDB.class);
 			XmlReaderFromDB.readDB("D:/JavaWorkplace/WebBuilde/src/db/db.xml", tmpArr);
 			for (Entity entity : tmpArr) {
 				entities.put(entity.getClassName(), entity);

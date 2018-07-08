@@ -179,16 +179,11 @@ public class MainViewController {
 
 	@FXML
 	public void changePath() {
-//		try {
-//			List<Path.Location> d = main.changePath();
-//			for (int i = 0; i < d.size(); i++) {
-//				System.out.print(d.get(i).getDirection());
-//			}
-//			System.out.println();
-//			showChangePath(d);
-//		} catch (NullPointerException ex) {
-//
-//		}
+		try {
+			List<Path.Location> d = main.changePath();
+			showChangePath(d);
+		} catch (NullPointerException ex) {
+		}
 	}
 
 	@FXML

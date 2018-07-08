@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ec.xm.dao.mapper.XmMoneySourceMapper">
+  <resultMap id="BaseResultMap" type="org.ec.xm.entity.XmMoneySource">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="project_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="creator_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="source" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="money" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="organization_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="created_at" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="updated_at" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <resultMap id="BaseResultMap1" type="org.ec.xm.dto.XM0203.XM0203A08DTO">
+    <result column="organizationId"></result>
+    <result column="projectId"></result>
+     <result column="totalMoney" property="totalMoney"></result>
+    <result column="fundingMoney" property="fundingMoney"></result>
+    <collection property="moneySource" select="getMoneySource" column="{organization_id=organizationId,project_id=projectId}">
+    </collection>
+  </resultMap>
+    <resultMap id="BaseResultMap2" type="org.ec.xm.dto.XM0210.XM0210A04DTO">
+        <result column="organizationId"></result>
+        <result column="projectId"></result>
+        <result column="totalMoney" property="totalMoney"></result>
+        <result column="fundingMoney" property="fundingMoney"></result>
+        <collection property="moneySource" select="getMoneySource1" column="{organization_id=organizationId,project_id=projectId}">
+        </collection>
+    </resultMap>
+    <select id="getTotalFromMoneydown" parameterType="org.ec.xm.dto.XM0210.XM0210A04InputDTO" resultType="java.lang.Object">
+    SELECT
+    sum(money)  AS money
+    FROM
+    xm_funding_detail
+    WHERE
+        organization_id = #{organizationId,jdbcType=INTEGER}
+        AND project_id = #{projectId,jdbcType=INTEGER}
+    </select>
+    <select id="getTotalFromMoneysource" parameterType="org.ec.xm.dto.XM0210.XM0210A04InputDTO" resultType="java.lang.Object">
+		SELECT
+			SUM(money) AS money
+		FROM
+			xm_money_source
+		WHERE
+			organization_id = #{organizationId,jdbcType=INTEGER}
+		AND project_id = #{projectId,jdbcType=INTEGER}
+    </select>
+    <select id="getMoneySource1" resultType="org.ec.xm.dto.XM0210.XM0210A04S01DTO">
+        SELECT created_at as createdAt,source,money from xm_money_source where organization_id=#{organization_id} and project_id=#{project_id} order by created_at desc
+    </select>
+  <select id="getMoneySource" resultType="org.ec.xm.dto.XM0203.XM0203A08S01DTO">
+  SELECT created_at as createdAt,source,money from xm_money_source where organization_id=#{organization_id} and project_id=#{project_id} order by created_at desc
+  </select>
+    <select id="getAllSource1" parameterType="org.ec.xm.dto.XM0210.XM0210A04InputDTO" resultMap="BaseResultMap2">
+SELECT
+fundingMoney,#{organizationId,jdbcType=INTEGER} as organizationId, #{projectId,jdbcType=INTEGER} as projectId
+FROM
+	(
+SELECT
+	SUM(money) AS fundingMoney
+FROM
+	xm_funding_detail
+WHERE
+	funding_id IN (
+		SELECT
+			id
+		FROM
+			xm_funding
+		where
+			organization_id = #{organizationId,jdbcType=INTEGER}
+		AND project_id = #{projectId,jdbcType=INTEGER}
+	)
+	) AS a
+    </select>
+  <select id="getAllSource" parameterType="org.ec.xm.dto.XM0203.XM0203A08InputDTO" resultMap="BaseResultMap1">
+SELECT
+fundingMoney,totalMoney,#{organizationId,jdbcType=INTEGER} as organizationId, #{projectId,jdbcType=INTEGER} as projectId
+FROM
+	(
+SELECT
+	SUM(money) AS fundingMoney
+FROM
+	xm_funding_detail
+WHERE
+	funding_id IN (
+		SELECT
+			id
+		FROM
+			xm_funding
+		where
+			organization_id = #{organizationId,jdbcType=INTEGER}
+		AND project_id = #{projectId,jdbcType=INTEGER}
+	)
+	) AS a,
+	(
+		SELECT
+			SUM(money) AS totalMoney
+		FROM
+			xm_money_source
+		WHERE
+			organization_id =#{organizationId,jdbcType=INTEGER}
+		AND project_id = #{projectId,jdbcType=INTEGER}
+	) as b
+  </select>
+  <insert id="addSource" parameterType="org.ec.xm.dto.XM0203.XM0203A09InputDTO">
+    insert into xm_money_source (project_id,creator_id,source,money,organization_id)
+    values(#{projectId,jdbcType=INTEGER},#{creatorId,jdbcType=INTEGER},#{source,jdbcType=VARCHAR},
+    #{money,jdbcType=DOUBLE},#{organizationId,jdbcType=INTEGER})
+  </insert>
+    <insert id="addSource1" parameterType="org.ec.xm.dto.XM0210.XM0210A05InputDTO">
+        insert into xm_money_source (project_id,creator_id,source,money,organization_id)
+        values(#{projectId,jdbcType=INTEGER},#{creatorId,jdbcType=INTEGER},#{source,jdbcType=VARCHAR},
+        #{money,jdbcType=DOUBLE},#{organizationId,jdbcType=INTEGER})
+    </insert>
+  <delete id="deleteFromMoneySource" parameterType="java.lang.Integer">
+DELETE  from xm_money_source where project_id=#{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from xm_money_source
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.ec.xm.entity.XmMoneySource">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into xm_money_source (project_id, creator_id, source, 
+      money, organization_id, created_at, 
+      updated_at)
+    values (#{projectId,jdbcType=INTEGER}, #{creatorId,jdbcType=INTEGER}, #{source,jdbcType=VARCHAR}, 
+      #{money,jdbcType=DOUBLE}, #{organizationId,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.ec.xm.entity.XmMoneySource">
+    update xm_money_source
+    set project_id = #{projectId,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      source = #{source,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DOUBLE},
+      organization_id = #{organizationId,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, project_id, creator_id, source, money, organization_id, created_at, updated_at
+    from xm_money_source
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, project_id, creator_id, source, money, organization_id, created_at, updated_at
+    from xm_money_source
+  </select>
+</mapper>

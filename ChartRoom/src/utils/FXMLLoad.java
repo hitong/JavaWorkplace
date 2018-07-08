@@ -2,8 +2,6 @@ package utils;
 
 import java.io.IOException;
 
-import org.eclipse.jdt.internal.compiler.batch.Main;
-
 import client.AddFriendControl;
 import client.ChatViewControl;
 import client.ContextControl;
@@ -16,7 +14,7 @@ import model.Friend;
 public class FXMLLoad {
 	public static <V extends InversionControl<LaunchClient>> Scene load(String sourse, LaunchClient main){
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource(sourse));
+		loader.setLocation(LaunchClient.class.getResource(sourse));
 		try {
 			Parent parent = loader.load();
 			Scene scene = new Scene(parent);
@@ -33,7 +31,7 @@ public class FXMLLoad {
 	
 	public static Parent load(String sourse, ChatViewControl main, Friend friend){
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource(sourse));
+		loader.setLocation(LaunchClient.class.getResource(sourse));
 		try {
 			Parent parent = loader.load();
 			if(friend != null){

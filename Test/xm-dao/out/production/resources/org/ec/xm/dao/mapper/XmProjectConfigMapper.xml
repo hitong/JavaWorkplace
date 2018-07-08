@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ec.xm.dao.mapper.XmProjectConfigMapper">
+    <resultMap id="BaseResultMap" type="org.ec.xm.entity.XmProjectConfig">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="timed_task_type" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="data_template_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="project_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="created_at" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="updated_at" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="timing_task_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        </constructor>
+    </resultMap>
+    <resultMap id="BaseResultMap1" type="org.ec.xm.dto.XM0203.XM0203A12DTO">
+        <result column="id" property="organizationId"></result>
+        <result column="name" property="name"></result>
+    </resultMap>
+<resultMap id="BaseResultMap6" type="java.lang.Integer">
+</resultMap>
+<select id="getAllTimingTaskId"  parameterType="java.lang.Integer"  resultMap="BaseResultMap6">
+select timing_task_id from xm_project_config where project_id =#{id}
+</select>
+    <select id="getParentId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+ SELECT  parent_id from ge_organization where id=#{id,jdbcType=INTEGER}
+  </select>
+    <select id="getAllOrganization1" parameterType="java.lang.Integer" resultMap="BaseResultMap1">
+    select id,name from ge_organization where parent_id=#{id,jdbcType=INTEGER} and org_type=5 order by sort
+  </select>
+    <select id="getAllOrganization" parameterType="java.lang.Integer" resultMap="BaseResultMap1">
+     select id,name from ge_organization where parent_id=#{id,jdbcType=INTEGER} and org_type=4 order by sort
+  </select>
+    <delete id="deleteFromProjectConfig" parameterType="java.lang.Integer">
+    delete from xm_project_config
+    where project_id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from xm_project_config
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="org.ec.xm.entity.XmProjectConfig">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into xm_project_config (timed_task_type, data_template_id, project_id,
+        created_at, updated_at)
+        values (#{timedTaskType,jdbcType=VARCHAR}, #{dataTemplateId,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER},
+        #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="org.ec.xm.entity.XmProjectConfig">
+    update xm_project_config
+    set timed_task_type = #{timedTaskType,jdbcType=VARCHAR},
+      data_template_id = #{dataTemplateId,jdbcType=INTEGER},
+      project_id = #{projectId,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, timed_task_type, data_template_id, project_id, created_at, updated_at
+    from xm_project_config
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+    select id, timed_task_type, data_template_id, project_id, created_at, updated_at
+    from xm_project_config
+  </select>
+</mapper>

@@ -36,6 +36,7 @@ public class ClientHandle extends IoHandlerAdapter{
 	@Override
 	public void messageReceived(IoSession session, Object message) throws Exception {
 		MessageService.excuateFromService((Message) message,this);
+		System.out.println(message);
 	}
 
 	@Override
